@@ -1,5 +1,10 @@
 package com.EventManagement.controller;
 
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
+
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -7,10 +12,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.EventManagement.model.User;
 import com.EventManagement.repository.UserRepository;
-
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -76,4 +82,56 @@ public class AuthController {
         }
         return "redirect:/";
     }
+    
+    @GetMapping("/editProfilePage")
+    public String editProfilePage(Model model, HttpSession session) {
+        String username = (String) session.getAttribute("username");
+        if (username != null) {
+            User user = userRepository.findByUsername(username);
+            model.addAttribute("user", user);
+            return "user/profile/editProfile"; 
+        }
+        return "redirect:/loginPage";
+    }
+
+	@PostMapping("/editProfile")
+	public String updateProfile(@ModelAttribute("user") User user,
+			@RequestParam("profilePicture") MultipartFile profilePicture, HttpSession session) {
+		String username = (String) session.getAttribute("username");
+		if (username == null) {
+			return "redirect:/loginPage";
+		}
+
+		try {
+			User existingUser = userRepository.findByUsername(username);
+			if (existingUser == null) {
+				return "redirect:/loginPage";
+			}
+
+			existingUser.setEmail(user.getEmail());
+			existingUser.setPhone(user.getPhone());
+			existingUser.setLocation(user.getLocation());
+			existingUser.setBio(user.getBio());
+
+			if (!profilePicture.isEmpty()) {
+
+				String imagePath = "src/main/resources/static/images/profile/" + profilePicture.getOriginalFilename();
+				File saveFile = new File(imagePath);
+				Path savePath = saveFile.toPath();
+
+				saveFile.getParentFile().mkdirs();
+
+				Files.copy(profilePicture.getInputStream(), savePath, StandardCopyOption.REPLACE_EXISTING);
+				existingUser.setProfilePictureName(profilePicture.getOriginalFilename());
+
+				System.out.println("Profile picture saved at: " + savePath);
+			}
+
+			userRepository.save(existingUser);
+			return "redirect:/"; 
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "redirect:/editProfilePage";
+		}
+	}
 }

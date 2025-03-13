@@ -1,9 +1,12 @@
 package com.EventManagement.model;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Transient;
 
 @Entity
 public class User {
@@ -13,6 +16,15 @@ public class User {
 	private String username;
 	private String email;
 	private String password;
+	
+	private String phone;
+	private String location;
+	private String bio;
+	
+	private String profilePictureName;
+	@Transient
+	private MultipartFile profilePicture;
+	
 	public int getId() {
 		return id;
 	}
@@ -37,6 +49,35 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
-	
+	public String getPhone() {
+		return phone;
+	}
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+	public String getLocation() {
+		return location;
+	}
+	public void setLocation(String location) {
+		this.location = location;
+	}
+	public String getBio() {
+		return bio;
+	}
+	public void setBio(String bio) {
+		this.bio = bio;
+	}
+	public String getProfilePictureName() {
+		return profilePictureName;
+	}
+	public void setProfilePictureName(String profilePictureName) {
+		this.profilePictureName = profilePictureName;
+	}
+	public MultipartFile getProfilePicture() {
+		return profilePicture;
+	}
+	public void setProfilePicture(MultipartFile profilePicture) {
+		this.profilePicture = profilePicture;
+	}
+		
 }
