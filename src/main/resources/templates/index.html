@@ -46,7 +46,7 @@
 					<li class="nav-item"><a href="testimonials.html" class="nav-link">Testimonials</a></li>
 					<li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
 					<!-- User Authentication Dropdown -->
-					<li class="nav-item dropdown">
+					<li class="nav-item dropdown" th:if="${session.loggedIn == null or not session.loggedIn}">
 						<a href="#" class="nav-link dropdown-toggle" id="userDropdown" role="button"
 							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 							Join
@@ -57,12 +57,12 @@
 						</div>
 					</li>
 					<!-- User Profile Dropdown -->
-					<!-- <li class="nav-item dropdown">
+				    <li class="nav-item dropdown" th:if="${session.loggedIn != null or session.loggedIn}">
 						<a href="#" class="nav-link dropdown-toggle" id="userDropdown" role="button"
 							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 							<img src="images/image_1.jpg" alt="User Profile" class="rounded-circle" width="35"
 								height="35" style="object-fit: cover; border-radius: 50%;">
-							Replace with the actual profile image
+							<!--  Replace with the actual profile image -->
 						</a>
 						<div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
 							<a class="dropdown-item" href="profile.html">My Profile</a>
@@ -71,7 +71,7 @@
 							<div class="dropdown-divider"></div>
 							<a class="dropdown-item text-danger" href="#">Logout</a>
 						</div>
-					</li> -->
+					</li>
 				</ul>
 			</div>
 		</div>
