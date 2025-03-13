@@ -83,6 +83,17 @@ public class AuthController {
         return "redirect:/";
     }
     
+    @GetMapping("/profilePage")
+    public String showProfile(Model model, HttpSession session) {
+        String username = (String) session.getAttribute("username");
+        if (username != null) {
+            User user = userRepository.findByUsername(username);
+            model.addAttribute("user", user);
+            return "user/profile/profile"; 
+        }
+        return "redirect:/loginPage"; 
+    }
+    
     @GetMapping("/editProfilePage")
     public String editProfilePage(Model model, HttpSession session) {
         String username = (String) session.getAttribute("username");

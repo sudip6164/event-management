@@ -73,19 +73,20 @@
             <div class="row mt-4">
                 <div class="col-md-4 d-flex justify-content-center">
                     <div class="profile-image">
-                        <img src="images/image_1.jpg" alt="Profile Image" class="img-fluid rounded-circle"
+                    	<img src="images/image_1.jpg" th:if="${user.profilePictureName == null}"  alt="Default Profile Image"  class="img-fluid rounded-circle"
+                            style="width: 150px; height: 150px; object-fit: cover;">
+                        <img th:if="${user.profilePictureName != null}" th:src="@{'/images/profile/' + ${user.profilePictureName}}" alt="Profile Image"  class="img-fluid rounded-circle"
                             style="width: 150px; height: 150px; object-fit: cover;">
                     </div>
                 </div>
                 <div class="col-md-8">
-                    <h3>Username: JohnDoe</h3>
-                    <p><strong>Email:</strong> johndoe@example.com</p>
-                    <p><strong>Phone:</strong> +1234567890</p>
-                    <p><strong>Location:</strong> Lalitpur, Nepal</p>
-                    <p><strong>Bio:</strong> Enthusiastic event planner with a passion for creating memorable
-                        experiences.</p>
+                    <h3>Username: <span th:text="${user.username}"></span></h3>
+                    <p><strong>Email:</strong> <span th:text="${user.email}"></span></p>
+                    <p><strong>Phone:</strong> <span th:text="${user.phone}"></span></p>
+                    <p><strong>Location:</strong> <span th:text="${user.location}"></span></p>
+                    <p><strong>Bio:</strong> <span th:text="${user.bio}"></span></p>
                     <div class="mt-3">
-                        <a href="editProfile.html">
+                        <a href="/editProfilePage">
                         <button class="btn btn-primary">
                             Edit Profile
                         </button>
