@@ -63,6 +63,7 @@
 							<img src="images/image_1.jpg" alt="User Profile" class="rounded-circle" width="35"
 								height="35" style="object-fit: cover; border-radius: 50%;">
 							<!--  Replace with the actual profile image -->
+							<span th:text="${session.username.contains(' ') ? #strings.substringBefore(session.username, ' ') : session.username}"></span>
 						</a>
 						<div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
 							<a class="dropdown-item" href="profile.html">My Profile</a>
