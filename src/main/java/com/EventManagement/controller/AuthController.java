@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.EventManagement.model.User;
 import com.EventManagement.repository.UserRepository;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -64,5 +66,14 @@ public class AuthController {
         }
         session.setAttribute("loggedIn", false);
         return "user/login";
+    }
+    
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request, HttpServletResponse response) {
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
+        return "redirect:/";
     }
 }
