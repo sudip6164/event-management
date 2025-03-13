@@ -73,10 +73,10 @@
             <div class="row mt-4">
                 <div class="col-md-4 d-flex justify-content-center">
                     <div class="profile-image">
-                    	<img src="images/image_1.jpg" th:if="${user.profilePictureName == null}"  alt="Default Profile Image"  class="img-fluid rounded-circle"
-                            style="width: 150px; height: 150px; object-fit: cover;">
-                        <img th:if="${user.profilePictureName != null}" th:src="@{'/images/profile/' + ${user.profilePictureName}}" alt="Profile Image"  class="img-fluid rounded-circle"
-                            style="width: 150px; height: 150px; object-fit: cover;">
+                    	<img id="profileImagePreview"
+                             th:src="${user.profilePictureName != null ? '/images/profile/' + user.profilePictureName : '/images/image_1.jpg'}"
+                             alt="Profile Image" class="img-fluid rounded-circle"
+                             style="width: 150px; height: 150px; object-fit: cover;">
                     </div>
                 </div>
                 <div class="col-md-8">
