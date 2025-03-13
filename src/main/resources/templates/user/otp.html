@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EventTalk Forgot Password</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" href="img/favicon.png">
+    <style>
+        .otp-input {
+            width: 3rem;
+            height: 3rem;
+            text-align: center;
+            font-size: 1.5rem;
+            border-radius: 1rem;
+            border: 2px solid #ccc;
+            margin: 0.5rem;
+        }
+
+        .otp-container {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+    </style>
+</head>
+
+<body>
+    <section class="bg-gray-200 min-h-screen flex items-center justify-center px-4 sm:px-8 lg:px-16">
+        <!-- OTP Form Container -->
+        <div class="bg-gray-100 flex flex-col p-6 rounded-2xl shadow-lg w-full sm:w-[90%] md:w-[70%] lg:w-[50%] xl:w-[40%]">
+            <!-- Form -->
+            <div class="flex flex-col justify-center items-center w-full">
+                <h2 class="font-bold text-2xl text-center mt-8 text-[#6b76ff]">Enter OTP</h2>
+                <p class="text-center mt-2">Enter OTP sent to your email to reset password.</p>
+                <!-- OTP Form -->
+                <form action="" class="flex flex-col gap-4 w-full mt-6">
+                    <div class="otp-container">
+                        <input type="text" class="otp-input" maxlength="1" id="otp1" oninput="moveFocus(this, 'otp2')" required>
+                        <input type="text" class="otp-input" maxlength="1" id="otp2" oninput="moveFocus(this, 'otp3')" required>
+                        <input type="text" class="otp-input" maxlength="1" id="otp3" oninput="moveFocus(this, 'otp4')" required>
+                        <input type="text" class="otp-input" maxlength="1" id="otp4" required>
+                    </div>
+                    <button class="bg-[#6b76ff] text-white py-3 rounded-2xl mt-4 w-40 mx-auto">Submit</button>
+                </form>
+                <!-- OTP Form End -->
+            </div>
+        </div>
+    </section>
+
+    <script>
+        function moveFocus(current, nextId) {
+            if (current.value.length === current.maxLength) {
+                document.getElementById(nextId).focus();
+            }
+        }
+
+        // Optionally: Handle OTP submission by combining values
+        // document.querySelector("form").onsubmit = function(e) {
+        //     e.preventDefault();
+        //     let otp = '';
+        //     for (let i = 1; i <= 4; i++) {
+        //         otp += document.getElementById('otp' + i).value;
+        //     }
+        //     console.log("OTP entered:", otp);  // Send this OTP to the backend
+        // };
+    </script>
+</body>
+
+</html>

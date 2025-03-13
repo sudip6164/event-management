@@ -30,55 +30,7 @@
 
 <body>
 
-	<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
-		<div class="container">
-			<a class="navbar-brand" href="/">Even<span>talk.</span></a>
-			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
-				aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="oi oi-menu"></span> Menu
-			</button>
-
-			<div class="collapse navbar-collapse" id="ftco-nav">
-				<ul class="navbar-nav ml-auto">
-					<li class="nav-item"><a href="/" class="nav-link">Home</a></li>
-					<li class="nav-item"><a href="/aboutPage" class="nav-link">About</a></li>
-					<li class="nav-item active"><a href="/eventsPage" class="nav-link">Events</a></li>
-					<li class="nav-item"><a href="/testimonialsPage" class="nav-link">Testimonials</a></li>
-					<li class="nav-item"><a href="/contactPage" class="nav-link">Contact</a></li>
-					<!-- User Authentication Dropdown -->
-					<li class="nav-item dropdown" th:if="${session.loggedIn == null or not session.loggedIn}">
-						<a href="#" class="nav-link dropdown-toggle" id="userDropdown" role="button"
-							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							Join
-						</a>
-						<div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-							<a class="dropdown-item" href="/loginPage">Login</a>
-							<a class="dropdown-item" href="/registerPage">Register</a>
-						</div>
-					</li>
-					<!-- User Profile Dropdown -->
-				    <li class="nav-item dropdown" th:if="${session.loggedIn != null and session.loggedIn}">
-						<a href="#" class="nav-link dropdown-toggle" id="userDropdown" role="button"
-							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							<img id="profileImagePreview"
-                             th:src="${user.profilePictureName != null ? '/images/profile/' + user.profilePictureName : '/images/image_1.jpg'}"
-                             alt="Profile Image" class="rounded-circle" width="35"
-								height="35" style="object-fit: cover; border-radius: 50%;">
-							<span th:text="${session.username.contains(' ') ? #strings.substringBefore(session.username, ' ') : session.username}"></span>
-						</a>
-						<div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-							<a class="dropdown-item" href="/profilePage">My Profile</a>
-							<a class="dropdown-item" href="/changePasswordPage">Change Password</a>
-							<a class="dropdown-item" href="bookings.html">Bookings</a>
-							<div class="dropdown-divider"></div>
-							<a class="dropdown-item text-danger" href="/logout">Logout</a>
-						</div>
-					</li>
-				</ul>
-			</div>
-		</div>
-	</nav>
-	<!-- END nav -->
+	<div th:replace="~{fragments/user/navbar :: navbar}"></div>
 
 	<div class="hero-wrap js-fullheight" style="background-image: url('images/bg_1.jpg');"
 		data-stellar-background-ratio="0.5">
@@ -447,62 +399,7 @@
 		</div>
 	</section>
 
-	<footer class="ftco-footer ftco-bg-dark ftco-section">
-		<div class="container">
-			<div class="row mb-5">
-				<div class="col-md">
-					<div class="ftco-footer-widget mb-4">
-						<h2 class="ftco-heading-2">Eventalk</h2>
-						<p>EventTalk is a comprehensive, user-friendly platform designed to simplify and enhance the
-							event planning
-							and management process.</p>
-						<ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
-							<li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
-							<li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
-							<li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
-						</ul>
-					</div>
-				</div>
-				<div class="col-md">
-					<div class="ftco-footer-widget mb-4 ml-md-5">
-						<h2 class="ftco-heading-2">Useful Links</h2>
-						<ul class="list-unstyled">
-							<li><a href="#" class="py-2 d-block">Speakers</a></li>
-							<li><a href="#" class="py-2 d-block">Schedule</a></li>
-							<li><a href="#" class="py-2 d-block">Events</a></li>
-						</ul>
-					</div>
-				</div>
-				<div class="col-md">
-					<div class="ftco-footer-widget mb-4">
-						<h2 class="ftco-heading-2">Privacy</h2>
-						<ul class="list-unstyled">
-							<li><a href="#" class="py-2 d-block">Career</a></li>
-							<li><a href="#" class="py-2 d-block">About Us</a></li>
-							<li><a href="#" class="py-2 d-block">Contact Us</a></li>
-							<li><a href="#" class="py-2 d-block">Services</a></li>
-						</ul>
-					</div>
-				</div>
-				<div class="col-md">
-					<div class="ftco-footer-widget mb-4">
-						<h2 class="ftco-heading-2">Have a Questions?</h2>
-						<div class="block-23 mb-3">
-							<ul>
-								<li><span class="icon icon-map-marker"></span><span class="text">Lalitpur, Nepal</span>
-								</li>
-								<li><a href="#"><span class="icon icon-phone"></span><span
-											class="text">+9779876543210</span></a></li>
-								<li><a href="#"><span class="icon icon-envelope"></span><span
-											class="text">info@eventtalk.com</span></a>
-								</li>
-							</ul>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</footer>
+	<div th:replace="~{fragments/user/footer :: footer}"></div>
 
 	<!-- loader -->
 	<div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
