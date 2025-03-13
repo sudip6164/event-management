@@ -29,4 +29,24 @@ public class HomeController {
         }
         return "index";
     }
+	
+	@GetMapping("/aboutPage")
+    public String aboutPage() {
+        return "about";
+    }
+	
+	@GetMapping("/eventsPage")
+    public String eventsPage() {
+        return "events";
+    }
+	
+	@GetMapping("/testimonialsPage")
+    public String testimonialsPage() {
+        return "testimonials";
+    }
+	
+	@GetMapping("/contactPage")
+    public String contactPage() {
+        return "contact";
+    }
 }

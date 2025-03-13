@@ -144,5 +144,40 @@ public class AuthController {
 			e.printStackTrace();
 			return "redirect:/editProfilePage";
 		}
+				
 	}
+	
+	@GetMapping("/changePasswordPage")
+    public String changePasswordPage(Model model, HttpSession session) {
+        String username = (String) session.getAttribute("username");
+        if (username == null) {
+            return "redirect:/loginPage";
+        }
+        return "user/profile/changePassword";
+    }
+
+    @PostMapping("/changePassword")
+    public String changePassword(
+            @RequestParam("currentPassword") String currentPassword,
+            @RequestParam("newPassword") String newPassword,
+            Model model,
+            HttpSession session) {
+        String username = (String) session.getAttribute("username");
+        if (username == null) {
+            return "redirect:/loginPage";
+        }
+
+        User user = userRepository.findByUsername(username);
+
+        if (!BCrypt.checkpw(currentPassword, user.getPassword())) {
+            model.addAttribute("error", "Current password is incorrect.");
+            return "user/profile/changePassword";
+        }
+
+        String hashedNewPassword = BCrypt.hashpw(newPassword, BCrypt.gensalt());
+        user.setPassword(hashedNewPassword);
+        userRepository.save(user);
+
+        return "redirect:/profilePage";
+    }
 }
