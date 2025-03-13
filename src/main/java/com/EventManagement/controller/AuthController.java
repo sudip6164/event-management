@@ -139,7 +139,7 @@ public class AuthController {
 			}
 
 			userRepository.save(existingUser);
-			return "redirect:/"; 
+			return "redirect:/profilePage"; 
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "redirect:/editProfilePage";
