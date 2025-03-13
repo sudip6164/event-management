@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EventTalk Reset Password</title>
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <link rel="icon" href="img/favicon.png">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
+    <style>
+        .bi-eye-slash,
+        .bi-eye-fill {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            right: 15px;
+            transform: translateY(-50%);
+        }
+
+        .password-container {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .move-eye-up {
+            top: 35%;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #6b76ff;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            display: none;
+            font-weight: bold;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .toast.show {
+            display: block;
+            opacity: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <section class="bg-gray-200 min-h-screen flex items-center justify-center px-4 sm:px-8 lg:px-16">
+        <!--Reset Password Form Container-->
+        <div
+            class="bg-gray-100 flex flex-col p-1 rounded-2xl shadow-lg w-full sm:w-[90%] md:w-[70%] lg:w-[50%] xl:w-[40%]">
+            <!--Form-->
+            <div class="flex flex-col justify-center items-center px-8 py-6 w-full">
+                <h2 class="font-bold text-2xl text-center mt-8">Reset Password</h2>
+                <p class="text-center mt-2">Enter new password to reset.</p>
+                <!--Reset Password Form-->
+                <form action="" class="flex flex-col gap-4 w-full" id="resetPasswordForm">
+                    <div class="password-container">
+                        <input class="p-3 mt-3 rounded-xl border w-full" type="password" name="newPassword"
+                            id="newPassword" placeholder="Enter New Password" required>
+                        <i id="togglePasswordNew" class="bi bi-eye-slash"></i>
+                        <div id="newPasswordError" class="text-red-600 text-sm mt-2 hidden">Password must be at least 8
+                            characters long, with at least one uppercase letter, one lowercase letter, one number, and
+                            one special character.</div>
+                    </div>
+                    <div class="password-container">
+                        <input class="p-3 mt-3 rounded-xl border w-full" type="password" name="confirmPassword"
+                            id="confirmPassword" placeholder="Enter Confirm Password" required>
+                        <i id="togglePasswordConfirm" class="bi bi-eye-slash"></i>
+                        <div id="confirmPasswordError" class="text-red-600 text-sm mt-2 hidden">Passwords do not match!
+                        </div>
+                    </div>
+                    <button type="submit"
+                        class="bg-[#6b76ff] text-white py-3 rounded-2xl mt-4 w-40 mx-auto">Save</button>
+                </form>
+                <!--Reset Password Form End-->
+            </div>
+        </div>
+    </section>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">Password reset failed. Please check your input.</div>
+
+    <!--Password Toggle-->
+    <script>
+        // Toggle for New Password Field
+        document.getElementById('togglePasswordNew').addEventListener('click', function () {
+            var passwordField = document.getElementById('newPassword');
+            var passwordFieldType = passwordField.getAttribute('type');
+            if (passwordFieldType === 'password') {
+                passwordField.setAttribute('type', 'text');
+                this.classList.remove('bi-eye-slash');
+                this.classList.add('bi-eye-fill');
+            } else {
+                passwordField.setAttribute('type', 'password');
+                this.classList.remove('bi-eye-fill');
+                this.classList.add('bi-eye-slash');
+            }
+        });
+
+        // Toggle for Confirm Password Field
+        document.getElementById('togglePasswordConfirm').addEventListener('click', function () {
+            var passwordField = document.getElementById('confirmPassword');
+            var passwordFieldType = passwordField.getAttribute('type');
+            if (passwordFieldType === 'password') {
+                passwordField.setAttribute('type', 'text');
+                this.classList.remove('bi-eye-slash');
+                this.classList.add('bi-eye-fill');
+            } else {
+                passwordField.setAttribute('type', 'password');
+                this.classList.remove('bi-eye-fill');
+                this.classList.add('bi-eye-slash');
+            }
+        });
+
+        // Form Validation on Submit
+        document.getElementById('resetPasswordForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            var newPassword = document.getElementById('newPassword').value;
+            var confirmPassword = document.getElementById('confirmPassword').value;
+
+            // Reset previous error messages
+            document.getElementById('newPasswordError').classList.add('hidden');
+            document.getElementById('confirmPasswordError').classList.add('hidden');
+            document.getElementById('toast').classList.remove('show');
+
+            // Password Validation: Check if New Password and Confirm Password match
+            if (newPassword !== confirmPassword) {
+                document.getElementById('confirmPasswordError').classList.remove('hidden');
+                showToast("*Passwords do not match!");
+                return;
+            }
+
+            // Regex for Password Strength Validation
+            var passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+            if (!passwordRegex.test(newPassword)) {
+                document.getElementById('newPasswordError').classList.remove('hidden');
+                document.getElementById('togglePasswordNew').classList.add('move-eye-up');  // Move icon up
+                showToast("*Password must be at least 8 characters long, with at least one uppercase letter, one lowercase letter, one number, and one special character.");
+                return;
+            } else {
+                document.getElementById('togglePasswordNew').classList.remove('move-eye-up');
+            }
+
+
+            // If validation passes, you can proceed with form submission (this is where you'd normally send the request to the server)
+            showToast("Password reset successfully!");
+        });
+    </script>
+</body>
+
+</html>

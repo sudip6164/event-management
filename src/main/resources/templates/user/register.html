@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EventTalk Register Page</title>
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <link rel="icon" href="img/favicon.png">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
+    <style>
+        .bi-eye-slash,
+        .bi-eye-fill {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <section class="bg-gray-200 min-h-screen flex items-center justify-center px-4 sm:px-8 lg:px-16">
+        <!--Login Container-->
+        <div class="bg-gray-100 flex flex-col sm:flex-row rounded-2xl shadow-lg w-full sm:w-[90%] lg:w-3/4 xl:w-1/2">
+            <!--Image (hidden on small screens)-->
+            <div class="sm:w-1/2 sm:block hidden mt-8 px-2">
+                <img src="/images/register.jpg" alt="Login Image" class="rounded-2xl w-full  mt-3 ml-3">
+            </div>
+            
+            <!--Form-->
+            <div class="flex flex-col justify-center items-center px-8 py-6 sm:w-full sm:max-w-md w-full">
+                <h2 class="font-bold text-2xl text-center mt-8 text-[#6b76ff]">Register</h2>
+                <p class="text-center mt-2">Please sign up to login to your account</p>
+
+                <form action="register" method="POST" class="flex flex-col gap-4 w-full">
+                    <input class="p-3 mt-8 rounded-xl border w-full" type="text" name="username" id="username" placeholder="Enter Username" required>
+                     <p th:text="${errorUserExists}" class="text-danger"></p>
+                    <input class="p-3 mt-3 rounded-xl border w-full" type="email" name="email" id="email" placeholder="Enter Email" required>
+                    <div class="relative">
+                        <input class="p-3 mt-3 rounded-xl border w-full" type="password" name="password" id="password" placeholder="Enter Password" required>
+                        <i id="togglePassword" class="bi bi-eye-slash absolute top-1/2 right-3 transform -translate-y-1/4"></i>
+                    </div>
+                    <button class="bg-[#6b76ff] text-white py-3 rounded-2xl mt-4">Register Now</button>
+                </form>
+                <hr class="border-gray-500 mt-10">
+                <p class="mt -7 text-center">Already have an account? <strong><a href="login.html">Login</a></strong></p>
+            </div>
+        </div>
+    </section>  
+    <script>
+        document.getElementById('togglePassword').addEventListener('click', function () {
+            var passwordField = document.getElementById('password');
+            var passwordFieldType = passwordField.getAttribute('type');
+            if (passwordFieldType === 'password') {
+                passwordField.setAttribute('type', 'text');
+                this.classList.remove('bi-eye-slash');
+                this.classList.add('bi-eye-fill');
+            } else {
+                passwordField.setAttribute('type', 'password');
+                this.classList.remove('bi-eye-fill');
+                this.classList.add('bi-eye-slash');
+            }
+        });
+    </script>
+</body>
+</html>
