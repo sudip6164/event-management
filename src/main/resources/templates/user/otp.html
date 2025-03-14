@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EventTalk Forgot Password</title>
+    <title>EventTalk Enter OTP</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="icon" href="img/favicon.png">
     <style>
@@ -35,14 +35,16 @@
                 <h2 class="font-bold text-2xl text-center mt-8 text-[#6b76ff]">Enter OTP</h2>
                 <p class="text-center mt-2">Enter OTP sent to your email to reset password.</p>
                 <!-- OTP Form -->
-                <form action="" class="flex flex-col gap-4 w-full mt-6">
+                <form action="/verifyOTP" method="POST" class="flex flex-col gap-4 w-full mt-6" onsubmit="combineOTP()">
+                	<input type="hidden" name="email" th:value="${email}">
+                	<input type="hidden" name="otp" id="otpInput">
                     <div class="otp-container">
                         <input type="text" class="otp-input" maxlength="1" id="otp1" oninput="moveFocus(this, 'otp2')" required>
                         <input type="text" class="otp-input" maxlength="1" id="otp2" oninput="moveFocus(this, 'otp3')" required>
                         <input type="text" class="otp-input" maxlength="1" id="otp3" oninput="moveFocus(this, 'otp4')" required>
                         <input type="text" class="otp-input" maxlength="1" id="otp4" required>
                     </div>
-                    <button class="bg-[#6b76ff] text-white py-3 rounded-2xl mt-4 w-40 mx-auto">Submit</button>
+                    <button type="submit" class="bg-[#6b76ff] text-white py-3 rounded-2xl mt-4 w-40 mx-auto">Submit</button>
                 </form>
                 <!-- OTP Form End -->
             </div>
@@ -55,17 +57,23 @@
                 document.getElementById(nextId).focus();
             }
         }
-
-        // Optionally: Handle OTP submission by combining values
-        // document.querySelector("form").onsubmit = function(e) {
-        //     e.preventDefault();
-        //     let otp = '';
-        //     for (let i = 1; i <= 4; i++) {
-        //         otp += document.getElementById('otp' + i).value;
-        //     }
-        //     console.log("OTP entered:", otp);  // Send this OTP to the backend
-        // };
     </script>
+    <script>
+    function moveFocus(current, nextId) {
+        if (current.value.length === current.maxLength) {
+            document.getElementById(nextId).focus();
+        }
+    }
+
+    function combineOTP() {
+        let otp = document.getElementById("otp1").value +
+                  document.getElementById("otp2").value +
+                  document.getElementById("otp3").value +
+                  document.getElementById("otp4").value;
+        document.getElementById("otpInput").value = otp;
+    }
+</script>
+    
 </body>
 
 </html>
