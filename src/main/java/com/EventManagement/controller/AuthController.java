@@ -76,11 +76,7 @@ public class AuthController {
             session.setMaxInactiveInterval(3600);
             session.setAttribute("username", user.getUsername());
             session.setAttribute("loggedIn", true);
-            if (u.getUsername().equals("admin") && u.getPassword().equals("Admin@123")) {
-                return "redirect:/admin";
-            } else {
-                return "index";
-            }
+            return "index";
         }
         session.setAttribute("loggedIn", false);
         return "user/login";
