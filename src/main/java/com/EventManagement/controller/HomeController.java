@@ -31,22 +31,46 @@ public class HomeController {
     }
 	
 	@GetMapping("/aboutPage")
-    public String aboutPage() {
+    public String aboutPage(Model model) {
+		String username = (String) session.getAttribute("username");
+        if (username != null) {
+            User user = userRepository.findByUsername(username);
+            model.addAttribute("user", user);
+            return "about"; 
+        }
         return "about";
     }
 	
 	@GetMapping("/eventsPage")
-    public String eventsPage() {
+    public String eventsPage(Model model) {
+		String username = (String) session.getAttribute("username");
+        if (username != null) {
+            User user = userRepository.findByUsername(username);
+            model.addAttribute("user", user);
+            return "events"; 
+        }
         return "events";
     }
 	
 	@GetMapping("/testimonialsPage")
-    public String testimonialsPage() {
+    public String testimonialsPage(Model model) {
+		String username = (String) session.getAttribute("username");
+        if (username != null) {
+            User user = userRepository.findByUsername(username);
+            model.addAttribute("user", user);
+            return "testimonials"; 
+        }
         return "testimonials";
     }
 	
 	@GetMapping("/contactPage")
-    public String contactPage() {
+    public String contactPage(Model model) {
+		String username = (String) session.getAttribute("username");
+        if (username != null) {
+            User user = userRepository.findByUsername(username);
+            model.addAttribute("user", user);
+            return "contact"; 
+        }
         return "contact";
     }
 }
