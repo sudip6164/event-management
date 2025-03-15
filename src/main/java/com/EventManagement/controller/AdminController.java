@@ -63,4 +63,14 @@ public class AdminController {
         }
         return "redirect:/admin/loginPage";
     }
+	
+	@GetMapping("/admin/userList")
+	public String UserTable(@ModelAttribute User u, Model model) {
+		Boolean isAdmin = (Boolean) session.getAttribute("adminUser");
+	    if (isAdmin == null || !isAdmin) {
+	        return "redirect:/admin/loginPage";
+	    }
+		model.addAttribute("userList", userRepository.findAll());
+		return "admin/manageUser";
+	}
 }

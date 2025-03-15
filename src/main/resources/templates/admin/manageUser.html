@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EventTalk Dashboard</title>
     <!----======== CSS ======== -->
-    <link rel="stylesheet" href="adminCss/dashboard.css">
-    <link rel="stylesheet" href="adminCss/table.css">
+    <link rel="stylesheet" href="/adminCss/dashboard.css">
+    <link rel="stylesheet" href="/adminCss/table.css">
 
     <!----===== Iconscout CSS ===== -->
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
@@ -71,20 +71,25 @@
                             <th>ID</th>
                             <th>Username</th>
                             <th>Email</th>
-                            <th>Description</th>
-                            <th>Image</th>
+                            <th>Phone</th>
+                            <th>Location</th>
+                            <th>Bio</th>
+                            <th>Profile Picture</th>
                             <th></th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td data-label="ID" >1</td>
-                            <td data-label="Username">john_doe</td>
-                            <td data-label="Email">john@example.com</td>
-                            <td data-label="Description">Active user since 2020.</td>
-                            <td data-label="Image"><img src="images/user1.jpg" alt="User  1" class="img-fluid"
-                                    style="width: 100px; height: auto;"></td>
+                         <tr th:each="u:${userList}">
+                            <td th:text="${u.id}" data-label="ID"></td>
+                            <td th:text="${u.username}" data-label="Username"></td>
+                            <td th:text="${u.email}" data-label="Email"></td>
+                            <td th:text="${u.phone}" data-label="Phone"></td>
+                            <td th:text="${u.location}" data-label="Location"></td>
+                            <td th:text="${u.bio}" data-label="Bio"></td>
+                            <td data-label="Image"><img th:src="${u.profilePictureName != null ? '/images/profile/' + u.profilePictureName : '/images/image_1.jpg'}"
+                             alt="User Profile" class="img-fluid"
+                             style="width: 100px; height: auto;"></td>
                             <td data-label="">
                                 <a href="editUser.html">
                                     <button class="btn btn-primary">Edit</button>
@@ -93,22 +98,6 @@
                             <td data-label="">
                                 <button class="btn btn-delete">Delete</button>
                             </td>
-                        </tr>
-                        <tr>
-                            <td data-label="ID">2</td>
-                            <td data-label="Username">jane_smith</td>
-                            <td data-label="Email">jane@example.com</td>
-                            <td data-label="Description">Frequent attendee of events.</td>
-                            <td data-label="Image"><img src="images/user2.jpg" alt="User  2" class="img-fluid"
-                                    style="width: 100px; height: auto;"></td>
-                                    <td data-label="">
-                                        <a href="editUser.html">
-                                            <button class="btn btn-primary">Edit</button>
-                                        </a>
-                                    </td>
-                                    <td data-label="">
-                                        <button class="btn btn-delete">Delete</button>
-                                    </td>
                         </tr>
                         <!-- Add more rows as needed -->
                     </tbody>
@@ -125,7 +114,7 @@
             </div>
         </div>
     </section>
-    <script src="./js/admin.js"></script>
+    <script src="js/admin.js"></script>
 </body>
 
 </html>
