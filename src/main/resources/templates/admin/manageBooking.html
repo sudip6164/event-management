@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EventTalk Dashboard</title>
+    <!----======== CSS ======== -->
+    <link rel="stylesheet" href="adminCss/dashboard.css">
+    <link rel="stylesheet" href="adminCss/table.css">
+
+    <!----===== Iconscout CSS ===== -->
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+</head>
+
+<body>
+    <nav>
+        <div class="logo-name">
+            <div class="logo-image">
+                <img src="images/logo.png" alt="">
+            </div>
+            <span class="logo_name">EventTalk</span>
+        </div>
+        <div class="menu-items">
+            <ul class="nav-links">
+                <li><a href="dashboard.html">
+                        <i class="uil uil-estate"></i>
+                        <span class="link-name">Dahsboard</span>
+                    </a></li>
+                <li><a href="manageEvents.html">
+                        <i class="uil uil-files-landscapes"></i>
+                        <span class="link-name">Events</span>
+                    </a></li>
+                <li><a href="manageUser.html">
+                        <i class="uil uil-user"></i>
+                        <span class="link-name">Users</span>
+                    </a></li>
+                <li><a href="manageBooking.html">
+                        <i class="uil uil-schedule"></i>
+                        <span class="link-name">Bookings</span>
+                    </a></li>
+            </ul>
+
+            <ul class="logout-mode">
+                <li><a href="adminLogin.html">
+                        <i class="uil uil-signout"></i>
+                        <span class="link-name">Logout</span>
+                    </a></li>   
+            </ul>
+        </div>
+    </nav>
+    <section class="dashboard">
+        <div class="top">
+            <i class="uil uil-bars sidebar-toggle"></i>
+            <div class="search-box">
+                <i class="uil uil-search"></i>
+                <input type="text" placeholder="Search here...">
+            </div>
+
+            <!--<img src="images/profile.jpg" alt="">-->
+        </div>
+        <div class="dash-content">
+            <div class="activity">
+                <div class="title">
+                    <i class="uil uil-clock-three"></i>
+                    <span class="text">Booking Management</span>
+                </div>
+                <table class="sc-responsive-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Username</th>
+                            <th>Event Name</th>
+                            <th>Ticket Type</th>
+                            <th>Payment Status</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td data-label="ID">1</td>
+                            <td data-label="Username">john_doe</td>
+                            <td data-label="Event Name">Tech Conference</td>
+                            <td data-label="Ticket Type">VIP</td>
+                            <td data-label="Payment Status">Paid</td>
+                            <td data-label="">
+                                <a href="editBooking.html">
+                                    <button class="btn btn-primary">Edit</button>
+                                </a>
+                            </td>
+                            <td data-label="">
+                                <button class="btn btn-delete">Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td data-label="ID">2</td>
+                            <td data-label="Username">jane_smith</td>
+                            <td data-label="Event Name">Music Festival</td>
+                            <td data-label="Ticket Type">Normal</td>
+                            <td data-label="Payment Status">Pending</td>
+                            <td data-label="">
+                                <a href="editBooking.html">
+                                    <button class="btn btn-primary">Edit</button>
+                                </a>
+                            </td>
+                            <td data-label="">
+                                <button class="btn btn-delete">Delete</button>
+                            </td>
+                        </tr>
+                        <!-- Add more rows as needed -->
+                    </tbody>
+                </table>
+
+                <!-- Pagination -->
+                <div class="pagination">
+                    <button class="btn btn-primary">Previous</button>
+                    <button class="btn btn-primary">1</button>
+                    <button class="btn btn-primary">2</button>
+                    <button class="btn btn-primary">3</button>
+                    <button class="btn btn-primary">Next</button>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script src="./js/admin.js"></script>
+</body>
+
+</html>

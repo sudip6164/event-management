@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EventTalk Dashboard</title>
+    <!----======== CSS ======== -->
+    <link rel="stylesheet" href="adminCss/dashboard.css">
+    <link rel="stylesheet" href="adminCss/table.css">
+    <!----===== Iconscout CSS ===== -->
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        /* Basic styles for the form */
+        .event-form {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: auto;
+        }
+
+        .event-form h2 {
+            text-align: center;
+            color: #6b76ff;
+            margin-bottom: 20px;
+        }
+
+        .event-form .form-group {
+            margin-bottom: 15px;
+        }
+
+        .event-form label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .event-form input,
+        .event-form textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .event-form button {
+            background-color: #6b76ff;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .event-form button:hover {
+            background-color: #5a65d6;
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <div class="logo-name">
+            <div class="logo-image">
+                <img src="images/logo.png" alt="">
+            </div>
+            <span class="logo_name">EventTalk</span>
+        </div>
+        <div class="menu-items">
+            <ul class="nav-links">
+                <li><a href="dashboard.html">
+                        <i class="uil uil-estate"></i>
+                        <span class="link-name">Dashboard</span>
+                    </a></li>
+                <li><a href="manageEvents.html">
+                        <i class="uil uil-files-landscapes"></i>
+                        <span class="link-name">Events</span>
+                    </a></li>
+                <li><a href="manageUser.html">
+                        <i class="uil uil-user"></i>
+                        <span class="link-name">Users</span>
+                    </a></li>
+                <li><a href="manageBooking.html">
+                        <i class="uil uil-schedule"></i>
+                        <span class="link-name">Bookings</span>
+                    </a></li>
+            </ul>
+
+            <ul class="logout-mode">
+                <li><a href="adminLogin.html">
+                        <i class="uil uil-signout"></i>
+                        <span class="link-name">Logout</span>
+                    </a></li>
+            </ul>
+        </div>
+    </nav>
+    <section class="dashboard">
+        <div class="top">
+            <i class="uil uil-bars sidebar-toggle"></i>
+            <div class="search-box">
+                <i class="uil uil-search"></i>
+                <input type="text" placeholder="Search here...">
+            </div>
+        </div>
+        <div class="dash-content">
+            <div class="activity">
+                <div class="title">
+                    <i class="uil uil-clock-three"></i>
+                    <span class="text">Edit Event Details</span>
+                </div>
+                <form class="event-form">
+                    <h2>Edit Event</h2>
+                    <div class="form-group">
+                        <label for="eventId">Event ID</label>
+                        <input type="text" id="eventId" name="eventId" placeholder="Enter Event ID" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="eventName">Event Name</label>
+                        <input type="text" id="eventName" name="eventName" placeholder="Enter Event Name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="venue">Venue</label>
+                        <input type="text" id="venue" name="venue" placeholder="Enter Venue" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="eventTime">Time</label>
+                        <input type="datetime-local" id="eventTime" name="eventTime" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea id="description" name="description" rows="4" placeholder="Enter Event Description"
+                            required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="image">Event Image</label>
+                        <input type="file" id="image" name="image" accept="image/*" required>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit">Update Event</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+    <script src="./js/admin.js"></script>
+</body>
+
+</html>

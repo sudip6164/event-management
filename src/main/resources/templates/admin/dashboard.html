@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EventTalk Dashboard</title>
+    <!----======== CSS ======== -->
+    <link rel="stylesheet" href="adminCss/dashboard.css">
+    <link rel="stylesheet" href="adminCss/table.css">
+
+    <!----===== Iconscout CSS ===== -->
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+</head>
+
+<body>
+    <nav>
+        <div class="logo-name">
+            <div class="logo-image">
+                <img src="images/logo.png" alt="">
+            </div>
+            <span class="logo_name">EventTalk</span>
+        </div>
+        <div class="menu-items">
+            <ul class="nav-links">
+                <li><a href="dashboard.html">
+                        <i class="uil uil-estate"></i>
+                        <span class="link-name">Dahsboard</span>
+                    </a></li>
+                <li><a href="manageEvents.html">
+                        <i class="uil uil-files-landscapes"></i>
+                        <span class="link-name">Events</span>
+                    </a></li>
+                <li><a href="manageUser.html">
+                        <i class="uil uil-user"></i>
+                        <span class="link-name">Users</span>
+                    </a></li>
+                <li><a href="manageBooking.html">
+                        <i class="uil uil-schedule"></i>
+                        <span class="link-name">Bookings</span>
+                    </a></li>
+            </ul>
+
+            <ul class="logout-mode">
+                <li><a href="adminLogin.html">
+                        <i class="uil uil-signout"></i>
+                        <span class="link-name">Logout</span>
+                    </a></li>
+            </ul>
+        </div>
+    </nav>
+    <section class="dashboard">
+        <div class="top">
+            <i class="uil uil-bars sidebar-toggle"></i>
+            <div class="search-box">
+                <i class="uil uil-search"></i>
+                <input type="text" placeholder="Search here...">
+            </div>
+
+            <!--<img src="images/profile.jpg" alt="">-->
+        </div>
+        <div class="dash-content">
+            <div class="overview">
+                <div class="title">
+                    <i class="uil uil-tachometer-fast-alt"></i>
+                    <span class="text">Dashboard</span>
+                </div>
+                <div class="boxes">
+                    <a href="manageEvents.html" class="box box1">
+                        <i class="uil uil-files-landscapes"></i>
+                        <span class="text">Total Events</span>
+                        <span class="number">50,120</span>
+                    </a>
+                    <a href="manageUser.html" class="box box2">
+                        <i class="uil uil-user"></i>
+                        <span class="text">Total Users</span>
+                        <span class="number">20,120</span>
+                    </a>
+                    <a href="manageBooking.html" class="box box3">
+                        <i class="uil uil-schedule"></i>
+                        <span class="text">Total Booking</span>
+                        <span class="number">10,120</span>
+                    </a>
+                </div>
+            </div>
+            <div class="activity">
+                <div class="title">
+                    <i class="uil uil-clock-three"></i>
+                    <span class="text">Recent Activity</span>
+                </div>
+                <table class="sc-responsive-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Description</th>
+                            <th>Image</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td data-label="ID">1</td>
+                            <td data-label="Username">john_doe</td>
+                            <td data-label="Email">john@example.com</td>
+                            <td data-label="Description">Active user since 2020.</td>
+                            <td data-label="Image"><img src="images/user1.jpg" alt="User  1" class="img-fluid"
+                                    style="width: 100px; height: auto;"></td>
+                        </tr>
+                        <tr>
+                            <td data-label="ID">2</td>
+                            <td data-label="Username">jane_smith</td>
+                            <td data-label="Email">jane@example.com</td>
+                            <td data-label="Description">Frequent attendee of events.</td>
+                            <td data-label="Image"><img src="images/user2.jpg" alt="User  2" class="img-fluid"
+                                    style="width: 100px; height: auto;"></td>
+                        </tr>
+                        <!-- Add more rows as needed -->
+                    </tbody>
+                </table>
+                <a href="manageUser.html"><button type="button" class="btn btn-outline-primary">
+                        View All
+                    </button>
+                </a>
+            </div>
+        </div>
+    </section>
+    <script src="./js/admin.js"></script>
+</body>
+
+</html>
