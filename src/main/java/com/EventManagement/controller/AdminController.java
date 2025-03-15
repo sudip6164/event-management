@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.EventManagement.model.User;
 import com.EventManagement.repository.UserRepository;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -50,6 +52,15 @@ public class AdminController {
             }
         }
         session.setAttribute("message", "Invalid email or password");
+        return "redirect:/admin/loginPage";
+    }
+	
+	@GetMapping("/admin/logout")
+    public String adminLogout(HttpServletRequest request, HttpServletResponse response) {
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
         return "redirect:/admin/loginPage";
     }
 }
