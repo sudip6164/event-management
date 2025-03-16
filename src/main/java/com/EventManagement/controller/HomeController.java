@@ -1,5 +1,7 @@
 package com.EventManagement.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -11,10 +13,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.EventManagement.model.Booking;
 import com.EventManagement.model.Contact;
 import com.EventManagement.model.Events;
+import com.EventManagement.model.PaymentStatus;
 import com.EventManagement.model.Review;
 import com.EventManagement.model.User;
+import com.EventManagement.repository.BookingRepository;
 import com.EventManagement.repository.ContactRepository;
 import com.EventManagement.repository.EventsRepository;
 import com.EventManagement.repository.ReviewRepository;
@@ -38,6 +43,9 @@ public class HomeController {
 	
 	@Autowired
     private ContactRepository contactRepository;
+	
+	@Autowired
+    private BookingRepository bookingRepository;
 	
     @Autowired
     private HttpSession session;
@@ -156,5 +164,45 @@ public class HomeController {
 		review.setEvents(events);
         reviewRepository.save(review);
         return "redirect:/eventsDetails/" + eventId;
+    }
+	
+	@PostMapping("/bookings/book")
+	public String bookTicket(@RequestParam int eventId, @RequestParam String ticketType, HttpSession session, Model model) {
+
+			String username = (String) session.getAttribute("username");
+			
+			if (username == null) {
+			return "redirect:/login"; 
+			}
+			
+			User user = userRepository.findByUsername(username);
+
+			Events events = eventsRepository.findById(eventId)
+			       .orElseThrow(() -> new RuntimeException("Event not found"));
+
+			Booking booking = new Booking();
+			booking.setUser(user);
+			booking.setEvents(events);
+			booking.setTicketType(ticketType);
+			booking.setPaymentStatus(PaymentStatus.PENDING);
+			
+			bookingRepository.save(booking);
+			model.addAttribute("user", user);
+			return "redirect:/bookings";
+}
+	
+	@GetMapping("/bookings")
+    public String getBookings(Model model, HttpSession session) {
+		String username = (String) session.getAttribute("username");
+		
+		if (username == null) {
+		return "redirect:/login"; 
+		}
+		
+		User user = userRepository.findByUsername(username);
+        List<Booking> bookings = bookingRepository.findByUser(user);
+        model.addAttribute("bookings", bookings);
+        model.addAttribute("user", user);
+        return "bookings";
     }
 }

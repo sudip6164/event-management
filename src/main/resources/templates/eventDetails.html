@@ -47,13 +47,16 @@
             <p><strong>Time:</strong> <span id="start-time" th:text="${events.eventStartTime}"></span> - <span id="end-time" th:text="${events.eventEndTime}"></span></p>
             <p><strong>Location:</strong> <span th:text="${events.venue}"></span></p>
             <div class="d-flex align-items-center">
-              <select id="ticket-type" class="form-control form-control-xs mr-2" required>
-                <option value="" disabled selected>Select Ticket Type</option>
-                <option value="vip">VIP</option>
-                <option value="regular">Regular</option>
-                <option value="normal">Normal</option>
-              </select>
-              <button class="btn btn-primary">Buy Ticket</button>
+              <form action="/bookings/book" method="POST">
+			    <input type="hidden" name="eventId" th:value="${events.id}">
+			    <select name="ticketType" class="form-control form-control-xs mr-2" required>
+			        <option value="" disabled selected>Select Ticket Type</option>
+			        <option value="VIP">VIP</option>
+			        <option value="Regular">Regular</option>
+			        <option value="Normal">Normal</option>
+			    </select>
+			    <button type="submit" class="btn btn-primary">Buy Ticket</button>
+			</form>
             </div>
           </div>
         </div>
