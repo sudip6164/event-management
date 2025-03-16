@@ -205,4 +205,17 @@ public class HomeController {
         model.addAttribute("user", user);
         return "bookings";
     }
+	
+	@GetMapping("/bookings/cancel/{id}")
+    public String cancelBooking(@PathVariable int id, Model model) {
+		String username = (String) session.getAttribute("username");
+		
+		if (username == null) {
+		return "redirect:/login"; 
+		}
+		User user = userRepository.findByUsername(username);
+        bookingRepository.deleteById(id);
+        model.addAttribute("user", user);
+        return "redirect:/bookings";
+    }
 }

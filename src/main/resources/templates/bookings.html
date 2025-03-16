@@ -56,7 +56,9 @@
                         <button class="btn btn-success custom-button">Generate QR Code</button>
                     </div>
                     <div class="d-flex mt-4">
-                		<button class="btn btn-danger">Cancel Booking</button>
+                    	<a th:href="@{'/bookings/cancel/'+${booking.id}}">
+                			<button class="btn btn-danger">Cancel Booking</button>
+                		</a>
             		</div>
                 </div>
             </div>
