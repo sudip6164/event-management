@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -79,32 +79,40 @@
                     <i class="uil uil-clock-three"></i>
                     <span class="text">Edit Event Details</span>
                 </div>
-                <form class="event-form">
+                <form action="/admin/eventsEdit" method="POST" enctype="multipart/form-data" th:object="${events}" class="event-form">
                     <h2>Edit Event</h2>
                     <div class="form-group">
                         <label for="eventId">Event ID</label>
-                        <input type="text" id="eventId" name="eventId" placeholder="Enter Event ID" required>
+                        <input type="hidden" id="eventId" th:field="*{id}" name="eventId" placeholder="Enter Event ID" required>
                     </div>
                     <div class="form-group">
                         <label for="eventName">Event Name</label>
-                        <input type="text" id="eventName" name="eventName" placeholder="Enter Event Name" required>
+                        <input type="text" id="eventName" th:field="*{eventName}" name="eventName" placeholder="Enter Event Name" required>
                     </div>
                     <div class="form-group">
                         <label for="venue">Venue</label>
-                        <input type="text" id="venue" name="venue" placeholder="Enter Venue" required>
+                        <input type="text" id="venue" th:field="*{venue}" name="venue" placeholder="Enter Venue" required>
                     </div>
                     <div class="form-group">
-                        <label for="eventTime">Time</label>
-                        <input type="datetime-local" id="eventTime" name="eventTime" required>
+                        <label for="eventDate">Date</label>
+                        <input type="date" id="eventDate" th:field="*{eventDate}" name="eventDate" placeholder="Enter Date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="eventStartTime">Event Start Time</label>
+                        <input type="time" id="eventStartTime" th:field="*{eventStartTime}" name="eventStartTime" placeholder="Enter Event Start Time" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="eventEndTime">Event End Time</label>
+                        <input type="time" id="eventEndTime" th:field="*{eventEndTime}" name="eventEndTime" placeholder="Enter Event End Time" required>
                     </div>
                     <div class="form-group">
                         <label for="description">Description</label>
-                        <textarea id="description" name="description" rows="4" placeholder="Enter Event Description"
+                        <textarea id="description" th:field="*{description}" name="description" rows="4" placeholder="Enter Event Description"
                             required></textarea>
                     </div>
                     <div class="form-group">
                         <label for="image">Event Image</label>
-                        <input type="file" id="image" name="image" accept="image/*" required>
+                        <input type="file" id="eventsPicture" name="eventsPicture" th:field="*{eventsPicture}" accept="image/*" required>
                     </div>
                     <div class="form-group">
                         <button type="submit">Update Event</button>

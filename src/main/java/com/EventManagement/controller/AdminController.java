@@ -194,4 +194,53 @@ public class AdminController {
         return "redirect:/admin/eventsList";
     }
 	
+	@GetMapping("/admin/eventsEditPage/{id}")
+	public String eventsEditPage(@PathVariable int id, Model model) {
+		Boolean isAdmin = (Boolean) session.getAttribute("adminUser");
+	    if (isAdmin == null || !isAdmin) {
+	        return "redirect:/admin/loginPage";
+	    }
+	    Events events = eventsRepository.getById(id);
+	    model.addAttribute("events", events);
+	    return "admin/editEvents";
+	}
+	
+	@PostMapping("/admin/eventsEdit")
+	public String eventsEdit(@ModelAttribute Events events, @RequestParam("eventsPicture") MultipartFile eventsPicture, Model model) {
+		Boolean isAdmin = (Boolean) session.getAttribute("adminUser");
+	    if (isAdmin == null || !isAdmin) {
+	        return "redirect:/admin/loginPage";
+	    }
+	    
+	    Events existingEvents = eventsRepository.findById(events.getId()).orElse(null);
+	    
+	    existingEvents.setEventName(events.getEventName());
+	    existingEvents.setVenue(events.getVenue());
+	    existingEvents.setEventDate(events.getEventDate());
+	    existingEvents.setEventStartTime(events.getEventStartTime());
+	    existingEvents.setEventEndTime(events.getEventEndTime());
+	    existingEvents.setEventName(events.getEventName());
+	    
+	    if (!eventsPicture.isEmpty()) {
+
+			String imagePath = "src/main/resources/static/images/events/" + eventsPicture.getOriginalFilename();
+			File saveFile = new File(imagePath);
+			Path savePath = saveFile.toPath();
+
+			saveFile.getParentFile().mkdirs();
+
+			try {
+				Files.copy(eventsPicture.getInputStream(), savePath, StandardCopyOption.REPLACE_EXISTING);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			existingEvents.setEventsPictureName(eventsPicture.getOriginalFilename());
+
+			System.out.println("Profile picture saved at: " + savePath);
+		}
+
+	    eventsRepository.save(existingEvents);
+	    return "redirect:/admin/eventsList";
+	}
 }

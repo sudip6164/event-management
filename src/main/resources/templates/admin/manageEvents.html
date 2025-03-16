@@ -65,7 +65,7 @@
                             <td data-label="Image"><img th:src="${e.eventsPictureName != null ? '/images/events/' + e.eventsPictureName : '/images/tech.jpg'}" alt="Tech Conference" class="img-fluid"
                                     style="width: 100px; height: auto;"></td>
                             <td data-label="">
-                                <a href="editEvents.html">
+                                <a th:href="@{'/admin/eventsEditPage/'+${e.id}}">
                                     <button class="btn btn-primary">Edit</button>
                                 </a>
                             </td>
