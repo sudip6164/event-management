@@ -91,7 +91,7 @@
                              alt="User Profile" class="img-fluid"
                              style="width: 100px; height: auto;"></td>
                             <td data-label="">
-                                <a href="editUser.html">
+                                <a th:href="@{'/admin/userEditPage/'+${u.id}}">
                                     <button class="btn btn-primary">Edit</button>
                                 </a>
                             </td>
@@ -114,7 +114,7 @@
             </div>
         </div>
     </section>
-    <script src="js/admin.js"></script>
+    <script src="/js/admin.js"></script>
 </body>
 
 </html>

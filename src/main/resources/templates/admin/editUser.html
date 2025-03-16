@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EventTalk Dashboard</title>
     <!----======== CSS ======== -->
-    <link rel="stylesheet" href="adminCss/dashboard.css">
-    <link rel="stylesheet" href="adminCss/table.css">
+    <link rel="stylesheet" href="/adminCss/dashboard.css">
+    <link rel="stylesheet" href="/adminCss/table.css">
     <!----===== Iconscout CSS ===== -->
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -111,28 +111,38 @@
                     <i class="uil uil-clock-three"></i>
                     <span class="text">Edit User Details</span>
                 </div>
-                <form class="event-form">
+                <form action="/admin/userEdit" method="POST" enctype="multipart/form-data" th:object="${user}" class="event-form">
                     <h2>Edit User</h2>
                     <div class="form-group">
                         <label for="userId" >User ID</label>
-                        <input type="text" disabled id="userId" name="userId" placeholder="Enter User ID" required>
+                        <input type="hidden" id="userId" th:field="*{id}" name="userId" placeholder="Enter User ID" required>
                     </div>
                     <div class="form-group">
                         <label for="username">Username</label>
-                        <input type="text" id="username" name="username" placeholder="Enter Username" required>
+                        <input type="text" id="username" th:field="*{username}" name="username" placeholder="Enter Username" required>
                     </div>
                     <div class="form-group">
                         <label for="email">Email</label>
-                        <input type="email" id="email" name="email" placeholder="Enter Email" required>
+                        <input type="email" id="email" th:field="*{email}" name="email" placeholder="Enter Email" required>
                     </div>
                     <div class="form-group">
-                        <label for="description">Description</label>
-                        <textarea id="description" name="description" rows="4" placeholder="Enter User Description"
+                        <label for="phone">Phone</label>
+                        <textarea id="phone" th:field="*{phone}" name="phone" rows="4" placeholder="Enter Phone"
                             required></textarea>
                     </div>
                     <div class="form-group">
-                        <label for="image">Profile Image</label>
-                        <input type="file" id="image" name="image" accept="image/*" required>
+                        <label for="location">Location</label>
+                        <textarea id="location" th:field="*{location}" name="location" rows="4" placeholder="Enter Location"
+                            required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="bio">Bio</label>
+                        <textarea id="bio" th:field="*{bio}" name="bio" rows="4" placeholder="Enter Bio"
+                            required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="image">Profile Picture</label>
+                        <input type="file" id="profilePicture" th:field="*{profilePicture}" accept="image/*">
                     </div>
                     <div class="form-group">
                         <button type="submit">Update User</button>
@@ -141,7 +151,7 @@
             </div>
         </div>
     </section>
-    <script src="./js/admin.js"></script>
+    <script src="/js/admin.js"></script>
 </body>
 
 </html>
