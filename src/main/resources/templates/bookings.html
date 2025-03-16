@@ -39,7 +39,7 @@
             <div class="row mt-4" th:each="booking : ${bookings}">
                 <div class="col-md-4 d-flex justify-content-center">
                     <div class="event-image">
-                        <img src="images/tech.jpg" alt="Event Image" class="img-fluid">
+                        <img th:src="${booking.events.eventsPictureName != null ? '/images/events/' + booking.events.eventsPictureName : '/images/tech.jpg'}" alt="Event Image" class="img-fluid">
                     </div>
                 </div>
                 <!-- Event Details -->
