@@ -131,4 +131,15 @@ public class AdminController {
 	    userRepository.save(existingUser);
 	    return "redirect:/admin/userList";
 	}
+	
+	@GetMapping("admin/userDelete/{id}")
+	public String userdelete(@PathVariable int id,	Model model)
+	{
+		Boolean isAdmin = (Boolean) session.getAttribute("adminUser");
+	    if (isAdmin == null || !isAdmin) {
+	        return "redirect:/admin/loginPage";
+	    }
+		userRepository.deleteById(id);
+		return "redirect:/admin/userList";
+	}
 }

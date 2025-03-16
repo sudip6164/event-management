@@ -96,7 +96,9 @@
                                 </a>
                             </td>
                             <td data-label="">
-                                <button class="btn btn-delete">Delete</button>
+                            	<a th:href="@{'/admin/userDelete/'+${u.id}}">
+                                	<button class="btn btn-delete">Delete</button>
+                                </a>
                             </td>
                         </tr>
                         <!-- Add more rows as needed -->
