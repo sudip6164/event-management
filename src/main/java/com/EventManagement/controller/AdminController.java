@@ -154,6 +154,7 @@ public class AdminController {
 	    if (isAdmin == null || !isAdmin) {
 	        return "redirect:/admin/loginPage";
 	    }
+		model.addAttribute("eventsList", eventsRepository.findAll());
 		return "admin/manageEvents";
 	}
 	
@@ -171,7 +172,7 @@ public class AdminController {
 		
 		if (!eventsPicture.isEmpty()) {
 
-			String imagePath = "src/main/resources/static/images/profile/" + eventsPicture.getOriginalFilename();
+			String imagePath = "src/main/resources/static/images/events/" + eventsPicture.getOriginalFilename();
 			File saveFile = new File(imagePath);
 			Path savePath = saveFile.toPath();
 

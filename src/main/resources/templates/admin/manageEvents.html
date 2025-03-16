@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -44,7 +44,9 @@
                             <th>ID</th>
                             <th>Event Name</th>
                             <th>Venue</th>
-                            <th>Time</th>
+                            <th>Date</th>
+                            <th>Event Start Time</th>
+                            <th>Event End Time</th>
                             <th>Description</th>
                             <th>Image</th>
                             <th></th>
@@ -52,14 +54,15 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td data-label="ID">1</td>
-                            <td data-label="Event Name">Tech Conference</td>
-                            <td data-label="Venue">Grand Hall, City Center</td>
-                            <td data-label="Time">January 20, 2025, 6:00 PM</td>
-                            <td data-label="Description">Join us for an amazing evening filled with entertainment,
-                                music, and fun.</td>
-                            <td data-label="Image"><img src="images/tech.jpg" alt="Tech Conference" class="img-fluid"
+                        <tr th:each="e:${eventsList}">
+                            <td th:text="${e.id}" data-label="ID"></td>
+                            <td th:text="${e.eventName}" data-label="Event Name"></td>
+                            <td th:text="${e.venue}" data-label="Venue"></td>
+                            <td th:text="${e.eventDate}" data-label="Date"></td>
+                            <td th:text="${e.eventStartTime}" data-label="Event Start Time"></td>
+                            <td th:text="${e.eventEndTime}" data-label="Event End Time"></td>
+                            <td th:text="${e.description}" data-label="Description"></td>
+                            <td data-label="Image"><img th:src="${e.eventsPictureName != null ? '/images/events/' + e.eventsPictureName : '/images/tech.jpg'}" alt="Tech Conference" class="img-fluid"
                                     style="width: 100px; height: auto;"></td>
                             <td data-label="">
                                 <a href="editEvents.html">
@@ -70,25 +73,7 @@
                                 <button class="btn btn-delete">Delete</button>
                             </td>
                         </tr>
-                        <tr>
-                            <td data-label="ID">2</td>
-                            <td data-label="Event Name">Music Festival</td>
-                            <td data-label="Venue">Central Park</td>
-                            <td data-label="Time">March 15, 2025, 3:00 PM</td>
-                            <td data-label="Description">A day filled with music, food, and fun activities for all ages.
-                            </td>
-                            <td data-label="Image"><img src="images/music_festival.jpg" alt="Music Festival"
-                                    class="img-fluid" style="width: 100px; height: auto;"></td>
-                            <td data-label="">
-                                <a href="editEvents.html">
-                                    <button class="btn btn-primary">Edit</button>
-                                </a>
-                            </td>
-                            <td data-label="">
-                                <button class="btn btn-delete">Delete</button>
-                            </td>
-                        </tr>
-                        <!-- Add more rows as needed -->
+                        
                     </tbody>
                 </table>
 
