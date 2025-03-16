@@ -27,6 +27,7 @@ public class Events {
     private String eventsPictureName;
 	@Transient
 	private MultipartFile eventsPicture;
+	
 	public int getId() {
 		return id;
 	}

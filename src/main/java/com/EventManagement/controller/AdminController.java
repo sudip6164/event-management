@@ -201,6 +201,9 @@ public class AdminController {
 	        return "redirect:/admin/loginPage";
 	    }
 	    Events events = eventsRepository.getById(id);
+	    System.out.println("Event Date: " + events.getEventDate());
+	    System.out.println("Event Start Time: " + events.getEventStartTime());
+	    System.out.println("Event End Time: " + events.getEventEndTime());
 	    model.addAttribute("events", events);
 	    return "admin/editEvents";
 	}
@@ -216,10 +219,15 @@ public class AdminController {
 	    
 	    existingEvents.setEventName(events.getEventName());
 	    existingEvents.setVenue(events.getVenue());
-	    existingEvents.setEventDate(events.getEventDate());
-	    existingEvents.setEventStartTime(events.getEventStartTime());
-	    existingEvents.setEventEndTime(events.getEventEndTime());
-	    existingEvents.setEventName(events.getEventName());
+	    if (events.getEventDate() != null) {
+	        existingEvents.setEventDate(events.getEventDate());
+	    }
+	    if (events.getEventStartTime() != null) {
+	        existingEvents.setEventStartTime(events.getEventStartTime());
+	    }
+	    if (events.getEventEndTime() != null) {
+	        existingEvents.setEventEndTime(events.getEventEndTime());
+	    }
 	    
 	    if (!eventsPicture.isEmpty()) {
 
@@ -242,5 +250,16 @@ public class AdminController {
 
 	    eventsRepository.save(existingEvents);
 	    return "redirect:/admin/eventsList";
+	}
+	
+	@GetMapping("admin/eventsDelete/{id}")
+	public String eventsdelete(@PathVariable int id,	Model model)
+	{
+		Boolean isAdmin = (Boolean) session.getAttribute("adminUser");
+	    if (isAdmin == null || !isAdmin) {
+	        return "redirect:/admin/loginPage";
+	    }
+		eventsRepository.deleteById(id);
+		return "redirect:/admin/eventsList";
 	}
 }
