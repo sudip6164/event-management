@@ -18,7 +18,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.EventManagement.model.User;
+import com.EventManagement.model.Events;
 import com.EventManagement.repository.UserRepository;
+import com.EventManagement.repository.EventsRepository;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -28,6 +30,9 @@ import jakarta.servlet.http.HttpSession;
 public class AdminController {
 	@Autowired
     private UserRepository userRepository;
+	
+	@Autowired
+    private EventsRepository eventsRepository;
 	
     @Autowired
     private HttpSession session;
@@ -142,4 +147,50 @@ public class AdminController {
 		userRepository.deleteById(id);
 		return "redirect:/admin/userList";
 	}
+	
+	@GetMapping("/admin/eventsList")
+	public String EventsTable(@ModelAttribute User u, Model model) {
+		Boolean isAdmin = (Boolean) session.getAttribute("adminUser");
+	    if (isAdmin == null || !isAdmin) {
+	        return "redirect:/admin/loginPage";
+	    }
+		return "admin/manageEvents";
+	}
+	
+	@GetMapping("/admin/eventsAddPage")
+    public String eventsAddPage() {
+		Boolean isAdmin = (Boolean) session.getAttribute("adminUser");
+	    if (isAdmin == null || !isAdmin) {
+	        return "redirect:/admin/loginPage";
+	    }
+        return "admin/addEvents";
+    }
+	
+	@PostMapping("/admin/eventsAdd")
+	public String eventsAdd(@ModelAttribute("events") Events events,  @RequestParam("eventsPicture") MultipartFile eventsPicture, Model model) {
+		
+		if (!eventsPicture.isEmpty()) {
+
+			String imagePath = "src/main/resources/static/images/profile/" + eventsPicture.getOriginalFilename();
+			File saveFile = new File(imagePath);
+			Path savePath = saveFile.toPath();
+
+			saveFile.getParentFile().mkdirs();
+
+			try {
+				Files.copy(eventsPicture.getInputStream(), savePath, StandardCopyOption.REPLACE_EXISTING);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			events.setEventsPictureName(eventsPicture.getOriginalFilename());
+
+			System.out.println("Events picture saved at: " + savePath);
+		}
+
+		eventsRepository.save(events);
+
+        return "redirect:/admin/eventsList";
+    }
+	
 }
