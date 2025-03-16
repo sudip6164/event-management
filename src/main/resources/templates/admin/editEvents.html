@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EventTalk Dashboard</title>
     <!----======== CSS ======== -->
-    <link rel="stylesheet" href="adminCss/dashboard.css">
-    <link rel="stylesheet" href="adminCss/table.css">
+    <link rel="stylesheet" href="/adminCss/dashboard.css">
+    <link rel="stylesheet" href="/adminCss/table.css">
     <!----===== Iconscout CSS ===== -->
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -62,41 +62,9 @@
 </head>
 
 <body>
-    <nav>
-        <div class="logo-name">
-            <div class="logo-image">
-                <img src="images/logo.png" alt="">
-            </div>
-            <span class="logo_name">EventTalk</span>
-        </div>
-        <div class="menu-items">
-            <ul class="nav-links">
-                <li><a href="dashboard.html">
-                        <i class="uil uil-estate"></i>
-                        <span class="link-name">Dashboard</span>
-                    </a></li>
-                <li><a href="manageEvents.html">
-                        <i class="uil uil-files-landscapes"></i>
-                        <span class="link-name">Events</span>
-                    </a></li>
-                <li><a href="manageUser.html">
-                        <i class="uil uil-user"></i>
-                        <span class="link-name">Users</span>
-                    </a></li>
-                <li><a href="manageBooking.html">
-                        <i class="uil uil-schedule"></i>
-                        <span class="link-name">Bookings</span>
-                    </a></li>
-            </ul>
-
-            <ul class="logout-mode">
-                <li><a href="adminLogin.html">
-                        <i class="uil uil-signout"></i>
-                        <span class="link-name">Logout</span>
-                    </a></li>
-            </ul>
-        </div>
-    </nav>
+    
+    <div th:replace="~{fragments/admin/navbar :: navbar}"></div>
+    
     <section class="dashboard">
         <div class="top">
             <i class="uil uil-bars sidebar-toggle"></i>
@@ -145,7 +113,7 @@
             </div>
         </div>
     </section>
-    <script src="./js/admin.js"></script>
+    <script src="/js/admin.js"></script>
 </body>
 
 </html>
