@@ -59,8 +59,8 @@
                             <td th:text="${e.eventName}" data-label="Event Name"></td>
                             <td th:text="${e.venue}" data-label="Venue"></td>
                             <td th:text="${e.eventDate}" data-label="Date"></td>
-                            <td th:text="${e.eventStartTime}" data-label="Event Start Time"></td>
-                            <td th:text="${e.eventEndTime}" data-label="Event End Time"></td>
+                            <td th:text="${e.eventStartTime}" data-label="Event Start Time" class="start-time"></td>
+                            <td th:text="${e.eventEndTime}" data-label="Event End Time" class="end-time"></td>
                             <td th:text="${e.description}" data-label="Description"></td>
                             <td data-label="Image"><img th:src="${e.eventsPictureName != null ? '/images/events/' + e.eventsPictureName : '/images/tech.jpg'}" alt="Tech Conference" class="img-fluid"
                                     style="width: 100px; height: auto;"></td>
@@ -91,6 +91,42 @@
         </div>
     </section>
     <script src="/js/admin.js"></script>
+     <script>
+  // Function to format time (HH:mm:ss) to 12-hour AM/PM format
+     function formatTimeToAMPM(timeStr) {
+         const timeParts = timeStr.split(':');
+         let hours = parseInt(timeParts[0]);
+         const minutes = timeParts[1];
+         const ampm = hours >= 12 ? 'PM' : 'AM';
+         
+         // Convert hours to 12-hour format
+         hours = hours % 12;
+         hours = hours ? hours : 12; // the hour '0' should be '12'
+         
+         // Format time as 12-hour time
+         const formattedTime = hours + ':' + (minutes < 10 ? '0' + minutes : minutes) + ' ' + ampm;
+         return formattedTime;
+     }
+
+     document.addEventListener("DOMContentLoaded", function() {
+         // Select all elements with the class "start-time" and "end-time"
+         const startTimes = document.querySelectorAll('.start-time');
+         const endTimes = document.querySelectorAll('.end-time');
+
+         // Format each start time
+         startTimes.forEach(function(startTimeElem) {
+             const startTime = startTimeElem.innerText;
+             startTimeElem.innerText = formatTimeToAMPM(startTime);
+         });
+
+         // Format each end time
+         endTimes.forEach(function(endTimeElem) {
+             const endTime = endTimeElem.innerText;
+             endTimeElem.innerText = formatTimeToAMPM(endTime);
+         });
+     });
+
+  </script>
 </body>
 
 </html>

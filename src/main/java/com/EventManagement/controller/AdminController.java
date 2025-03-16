@@ -201,9 +201,6 @@ public class AdminController {
 	        return "redirect:/admin/loginPage";
 	    }
 	    Events events = eventsRepository.getById(id);
-	    System.out.println("Event Date: " + events.getEventDate());
-	    System.out.println("Event Start Time: " + events.getEventStartTime());
-	    System.out.println("Event End Time: " + events.getEventEndTime());
 	    model.addAttribute("events", events);
 	    return "admin/editEvents";
 	}
