@@ -61,18 +61,30 @@
 
       <div class="pt-5 mt-5">
         <h3 class="mb-4">Leave a Review</h3>
-        <form action="#" class="p-4 bg-light" style="max-width: 400px; border-radius: 8px;">
+        <form action="/submitReview" method="POST" class="p-4 bg-light" style="max-width: 400px; border-radius: 8px;">
+        <input type="hidden" name="eventId" th:value="${events.id}" />
           <div class="form-group">
-            <label for="name">Name *</label>
-            <input type="text" class="form-control form-control-sm" id="name" required>
+            <label for="reviewerName">Name *</label>
+            <input type="text" class="form-control form-control-sm" id="reviewerName" name="reviewerName" required>
           </div>
           <div class="form-group">
-            <label for="email">Email *</label>
-            <input type="email" class="form-control form-control-sm" id="email" required>
+            <label for="reviewerName">Email *</label>
+            <input type="email" class="form-control form-control-sm" id="reviewerEmail" name="reviewerEmail" required>
+          </div>
+           <div class="form-group">
+            <label for="rating">Rating *</label>
+            <select id="rating" class="form-control form-control-sm" name="rating" required>
+                <option value="" disabled selected>Select Rating</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
           </div>
           <div class="form-group">
             <label for="review">Review *</label>
-            <textarea name="" id="review" cols="30" rows="3" class="form-control form-control-sm" required></textarea>
+            <textarea id="review" cols="30" rows="3" class="form-control form-control-sm" name="reviewText" required></textarea>
           </div>
           <div class="form-group">
             <input type="submit" value="Post Review" class="btn btn-sm py-2 px-3 btn-primary">

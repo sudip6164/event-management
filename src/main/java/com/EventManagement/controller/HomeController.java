@@ -4,11 +4,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.EventManagement.model.Events;
+import com.EventManagement.model.Review;
 import com.EventManagement.model.User;
 import com.EventManagement.repository.EventsRepository;
+import com.EventManagement.repository.ReviewRepository;
 import com.EventManagement.repository.UserRepository;
 import jakarta.servlet.http.HttpSession;
 
@@ -20,6 +25,9 @@ public class HomeController {
 	
 	@Autowired
     private EventsRepository eventsRepository;
+	
+	@Autowired
+    private ReviewRepository reviewRepository;
 	
     @Autowired
     private HttpSession session;
@@ -91,5 +99,13 @@ public class HomeController {
             return "contact"; 
         }
         return "contact";
+    }
+	
+	@PostMapping("/submitReview")
+	public String submitReview(@ModelAttribute("review") Review review, @RequestParam("eventId") int eventId, Model model) {
+		Events events = eventsRepository.getById(eventId);
+		review.setEvents(events);
+        reviewRepository.save(review);
+        return "redirect:/eventsDetails/" + eventId;
     }
 }
