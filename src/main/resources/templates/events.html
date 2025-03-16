@@ -63,7 +63,7 @@
             <p class="card-text mb-2" th:text="${e.description}">Join us for an exciting conference on the latest in technology.</p>
             <p class="mb-2"><strong>Date:</strong> <span th:text="${e.eventDate}"></span></p>
             <p class="mb-2"><strong>Location:</strong> <span th:text="${e.venue}"></span></p>
-            <a href="eventDetails.html" class="btn btn-primary btn-sm align-self-start">View Details</a>
+            <a th:href="@{'/eventsDetails/'+${e.id}}" class="btn btn-primary btn-sm align-self-start">View Details</a>
           </div>
         </div>
       </div>

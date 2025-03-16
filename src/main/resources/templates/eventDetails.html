@@ -8,24 +8,24 @@
 
   <link href="https://fonts.googleapis.com/css?family=Work+Sans:100,200,300,400,500,600,700,800,900" rel="stylesheet">
 
-  <link rel="stylesheet" href="css/open-iconic-bootstrap.min.css">
-  <link rel="stylesheet" href="css/animate.css">
+  <link rel="stylesheet" href="/css/open-iconic-bootstrap.min.css">
+  <link rel="stylesheet" href="/css/animate.css">
 
-  <link rel="stylesheet" href="css/owl.carousel.min.css">
-  <link rel="stylesheet" href="css/owl.theme.default.min.css">
-  <link rel="stylesheet" href="css/magnific-popup.css">
+  <link rel="stylesheet" href="/css/owl.carousel.min.css">
+  <link rel="stylesheet" href="/css/owl.theme.default.min.css">
+  <link rel="stylesheet" href="/css/magnific-popup.css">
+/
+  <link rel="stylesheet" href="/css/aos.css">
 
-  <link rel="stylesheet" href="css/aos.css">
+  <link rel="stylesheet" href="/css/ionicons.min.css">
 
-  <link rel="stylesheet" href="css/ionicons.min.css">
-
-  <link rel="stylesheet" href="css/bootstrap-datepicker.css">
-  <link rel="stylesheet" href="css/jquery.timepicker.css">
+  <link rel="stylesheet" href="/css/bootstrap-datepicker.css">
+  <link rel="stylesheet" href="/css/jquery.timepicker.css">
 
 
-  <link rel="stylesheet" href="css/flaticon.css">
-  <link rel="stylesheet" href="css/icomoon.css">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="/css/flaticon.css">
+  <link rel="stylesheet" href="/css/icomoon.css">
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 
 <body>
@@ -37,17 +37,16 @@
       <div class="row">
         <div class="d-flex">
           <div class="event-image mr-4">
-            <img src="images/tech.jpg" alt="Event Image" class="img-fluid">
+            <img th:src="${events.eventsPictureName != null ? '/images/events/' + events.eventsPictureName : '/images/tech.jpg'}" alt="Event Image" class="img-fluid">
           </div>
           <!-- Event Details -->
           <div class="col-md-6">
-            <h2>Tech Conference</h2>
-            <p>Join us for an amazing evening filled with entertainment, music, and fun. This event features live
-              performances, networking opportunities, and much more. Don’t miss out on the experience!</p>
+            <h2 th:text="${events.eventName}"></h2>
+            <p th:text="${events.description}"></p>
 
-            <p><strong>Date:</strong> January 20, 2025</p>
-            <p><strong>Time:</strong> 6:00 PM - 10:00 PM</p>
-            <p><strong>Location:</strong> Grand Hall, City Center</p>
+            <p><strong>Date:</strong> <span th:text="${events.eventDate}"></span></p>
+            <p><strong>Time:</strong> <span id="start-time" th:text="${events.eventStartTime}"></span> - <span id="end-time" th:text="${events.eventEndTime}"></span></p>
+            <p><strong>Location:</strong> <span th:text="${events.venue}"></span></p>
             <div class="d-flex align-items-center">
               <select id="ticket-type" class="form-control form-control-xs mr-2" required>
                 <option value="" disabled selected>Select Ticket Type</option>
@@ -96,24 +95,55 @@
     </svg></div>
 
 
-  <script src="js/jquery.min.js"></script>
-  <script src="js/jquery-migrate-3.0.1.min.js"></script>
-  <script src="js/popper.min.js"></script>
-  <script src="js/bootstrap.min.js"></script>
-  <script src="js/jquery.easing.1.3.js"></script>
-  <script src="js/jquery.waypoints.min.js"></script>
-  <script src="js/jquery.stellar.min.js"></script>
-  <script src="js/owl.carousel.min.js"></script>
-  <script src="js/jquery.magnific-popup.min.js"></script>
-  <script src="js/aos.js"></script>
-  <script src="js/jquery.animateNumber.min.js"></script>
-  <script src="js/bootstrap-datepicker.js"></script>
-  <script src="js/jquery.timepicker.min.js"></script>
-  <script src="js/scrollax.min.js"></script>
+  <script src="/js/jquery.min.js"></script>
+  <script src="/js/jquery-migrate-3.0.1.min.js"></script>
+  <script src="/js/popper.min.js"></script>
+  <script src="/js/bootstrap.min.js"></script>
+  <script src="/js/jquery.easing.1.3.js"></script>
+  <script src="/js/jquery.waypoints.min.js"></script>
+  <script src="/js/jquery.stellar.min.js"></script>
+  <script src="/js/owl.carousel.min.js"></script>
+  <script src="/js/jquery.magnific-popup.min.js"></script>
+  <script src="/js/aos.js"></script>
+  <script src="/js/jquery.animateNumber.min.js"></script>
+  <script src="/js/bootstrap-datepicker.js"></script>
+  <script src="/js/jquery.timepicker.min.js"></script>
+  <script src="/js/scrollax.min.js"></script>
   <script
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
-  <script src="js/google-map.js"></script>
-  <script src="js/main.js"></script>
+  <script src="/js/google-map.js"></script>
+  <script src="/js/main.js"></script>
+  
+ <script>
+    // Function to format time (HH:mm:ss) to 12-hour AM/PM format
+    function formatTimeToAMPM(timeStr) {
+      // Split the time string into hours and minutes
+      const timeParts = timeStr.split(':');
+      let hours = parseInt(timeParts[0]);
+      const minutes = timeParts[1];
+      const ampm = hours >= 12 ? 'PM' : 'AM';
+      
+      // Convert hours to 12-hour format
+      hours = hours % 12;
+      hours = hours ? hours : 12; // the hour '0' should be '12'
+      
+      // Format time as 12-hour time
+      const formattedTime = hours + ':' + (minutes < 10 ? '0' + minutes : minutes) + ' ' + ampm;
+      return formattedTime;
+    }
+
+    // Get the times from the HTML and format them
+    document.addEventListener("DOMContentLoaded", function() {
+      const startTimeElem = document.getElementById('start-time');
+      const endTimeElem = document.getElementById('end-time');
+
+      const startTime = startTimeElem.innerText;
+      const endTime = endTimeElem.innerText;
+
+      startTimeElem.innerText = formatTimeToAMPM(startTime);
+      endTimeElem.innerText = formatTimeToAMPM(endTime);
+    });
+  </script>
 
 </body>
 

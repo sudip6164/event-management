@@ -4,12 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 
+import com.EventManagement.model.Events;
 import com.EventManagement.model.User;
 import com.EventManagement.repository.EventsRepository;
 import com.EventManagement.repository.UserRepository;
-
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -57,6 +57,19 @@ public class HomeController {
         }
         return "events";
     }
+	
+	@GetMapping("/eventsDetails/{id}")
+	public String ProductDetailsPage(@PathVariable int id, Model model) {
+		Events events = eventsRepository.getById(id);
+		model.addAttribute("events", events);
+		String username = (String) session.getAttribute("username");
+        if (username != null) {
+            User user = userRepository.findByUsername(username);
+            model.addAttribute("user", user);
+            return "eventDetails"; 
+        }
+		return "eventDetails";
+	}
 	
 	@GetMapping("/testimonialsPage")
     public String testimonialsPage(Model model) {
