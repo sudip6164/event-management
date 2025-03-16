@@ -1,5 +1,7 @@
 package com.EventManagement.controller;
 
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +29,12 @@ import com.EventManagement.repository.UserRepository;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
 
 @Controller
 public class HomeController {
@@ -172,7 +179,7 @@ public class HomeController {
 			String username = (String) session.getAttribute("username");
 			
 			if (username == null) {
-			return "redirect:/login"; 
+			return "redirect:/loginPage"; 
 			}
 			
 			User user = userRepository.findByUsername(username);
@@ -196,7 +203,7 @@ public class HomeController {
 		String username = (String) session.getAttribute("username");
 		
 		if (username == null) {
-		return "redirect:/login"; 
+		return "redirect:/loginPage"; 
 		}
 		
 		User user = userRepository.findByUsername(username);
@@ -211,11 +218,82 @@ public class HomeController {
 		String username = (String) session.getAttribute("username");
 		
 		if (username == null) {
-		return "redirect:/login"; 
+		return "redirect:/loginPage"; 
 		}
 		User user = userRepository.findByUsername(username);
         bookingRepository.deleteById(id);
         model.addAttribute("user", user);
         return "redirect:/bookings";
     }
+	@GetMapping("/bookings/download/{id}")
+    public void downloadTicketPdf(@PathVariable int id, HttpServletResponse response, HttpSession session) {
+        String username = (String) session.getAttribute("username");
+        
+        if (username == null) {
+            try {
+                response.sendRedirect("/loginPage");
+                return;
+            } catch (IOException e) {
+                e.printStackTrace();
+                return;
+            }
+        }
+
+        try {
+            // Fetch booking details
+            Booking booking = bookingRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Booking not found"));
+
+            // Check if the booking belongs to the current user
+            if (!booking.getUser().getUsername().equals(username)) {
+                response.sendError(HttpServletResponse.SC_FORBIDDEN, "Unauthorized access");
+                return;
+            }
+
+            // Set response headers
+            response.setContentType("application/pdf");
+            response.setHeader("Content-Disposition", "attachment; filename=ticket_" + id + ".pdf");
+
+            // Create PDF document
+            Document document = new Document();
+            PdfWriter.getInstance(document, response.getOutputStream());
+            
+            document.open();
+            
+            // Add ticket details to PDF
+            document.add(new Paragraph("Event Ticket"));
+            document.add(new Paragraph("-------------------"));
+            document.add(new Paragraph("Booking ID: " + booking.getId()));
+            document.add(new Paragraph("Event: " + booking.getEvents().getEventName()));
+            document.add(new Paragraph("Booked by: " + booking.getUser().getUsername()));
+            
+			/*
+			 * SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+			 * document.add(new Paragraph("Date: " +
+			 * dateFormat.format(booking.getEvents().getEventDate())));
+			 */
+            
+//            SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm a");
+//            document.add(new Paragraph("Time: " + 
+//                timeFormat.format(booking.getEvents().getEventStartTime()) + " - " + 
+//                timeFormat.format(booking.getEvents().getEventEndTime())));
+//            
+            document.add(new Paragraph("Venue: " + booking.getEvents().getVenue()));
+            document.add(new Paragraph("Ticket Type: " + booking.getTicketType()));
+            document.add(new Paragraph("Payment Status: " + booking.getPaymentStatus()));
+            document.add(new Paragraph("-------------------"));
+            document.add(new Paragraph("Thank you for booking with EventTalk!"));
+
+            document.close();
+
+        } catch (DocumentException | IOException e) {
+            e.printStackTrace();
+            try {
+                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error generating PDF");
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+	
 }
