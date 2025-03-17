@@ -22,7 +22,7 @@
             <i class="uil uil-bars sidebar-toggle"></i>
             <div class="search-box">
                 <i class="uil uil-search"></i>
-                <input type="text" placeholder="Search here...">
+                <input type="text" id="searchInput" placeholder="Search here...">
             </div>
 
             <!--<img src="images/profile.jpg" alt="">-->
@@ -85,6 +85,26 @@
         </div>
     </section>
     <script src="/js/admin.js"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const searchInput = document.getElementById("searchInput");
+        const tableRows = document.querySelectorAll("tbody tr");
+
+        searchInput.addEventListener("keyup", function () {
+            const searchTerm = searchInput.value.toLowerCase();
+
+            tableRows.forEach(row => {
+                const username = row.querySelector("td[data-label='Username']").innerText.toLowerCase();
+                if (username.includes(searchTerm)) {
+                    row.style.display = "";
+                } else {
+                    row.style.display = "none";
+                }
+            });
+        });
+    });
+
+    </script>
 </body>
 
 </html>
