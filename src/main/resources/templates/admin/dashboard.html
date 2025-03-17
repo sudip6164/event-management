@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -37,17 +37,17 @@
                     <a href="manageEvents.html" class="box box1">
                         <i class="uil uil-files-landscapes"></i>
                         <span class="text">Total Events</span>
-                        <span class="number">50,120</span>
+                        <span th:text="${totalEvents}" class="number"></span>
                     </a>
                     <a href="manageUser.html" class="box box2">
                         <i class="uil uil-user"></i>
                         <span class="text">Total Users</span>
-                        <span class="number">20,120</span>
+                        <span th:text="${totalUsers}" class="number"></span>
                     </a>
                     <a href="manageBooking.html" class="box box3">
                         <i class="uil uil-schedule"></i>
                         <span class="text">Total Booking</span>
-                        <span class="number">10,120</span>
+                        <span th:text="${totalBookings}" class="number"></span>
                     </a>
                 </div>
             </div>

@@ -43,11 +43,19 @@ public class AdminController {
     private HttpSession session;
     
 	@GetMapping("/admin")
-    public String adminDashboard() {
+    public String adminDashboard(Model model) {
 		Boolean isAdmin = (Boolean) session.getAttribute("adminUser");
 	    if (isAdmin == null || !isAdmin) {
 	        return "redirect:/admin/loginPage";
 	    }
+	    
+	    long totalEvents = eventsRepository.count();
+	    long totalUsers = userRepository.count();
+	    long totalBookings = bookingRepository.count();
+	    
+        model.addAttribute("totalEvents", totalEvents);
+        model.addAttribute("totalUsers", totalUsers);
+        model.addAttribute("totalBookings", totalBookings);
 	    return "admin/dashboard";
     }
 	
