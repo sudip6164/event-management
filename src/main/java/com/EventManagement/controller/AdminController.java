@@ -254,7 +254,7 @@ public class AdminController {
 	}
 	
 	@GetMapping("admin/eventsDelete/{id}")
-	public String eventsdelete(@PathVariable int id,	Model model)
+	public String eventsdelete(@PathVariable int id, Model model)
 	{
 		Boolean isAdmin = (Boolean) session.getAttribute("adminUser");
 	    if (isAdmin == null || !isAdmin) {
@@ -272,5 +272,16 @@ public class AdminController {
 	    }
 		model.addAttribute("bookingList", bookingRepository.findAll());
 		return "admin/manageBooking";
+	}
+	
+	@GetMapping("admin/bookingDelete/{id}")
+	public String bokingdelete(@PathVariable int id, Model model)
+	{
+		Boolean isAdmin = (Boolean) session.getAttribute("adminUser");
+	    if (isAdmin == null || !isAdmin) {
+	        return "redirect:/admin/loginPage";
+	    }
+		bookingRepository.deleteById(id);
+		return "redirect:/admin/bookingList";
 	}
 }

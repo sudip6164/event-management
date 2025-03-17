@@ -62,7 +62,9 @@
                                 </a>
                             </td>
                             <td data-label="">
-                                <button class="btn btn-delete">Delete</button>
+                                <a th:href="@{'/admin/bookingDelete/'+${b.id}}">
+                                	<button class="btn btn-delete">Delete</button>
+                                </a>
                             </td>
                         </tr>
                     </tbody>
