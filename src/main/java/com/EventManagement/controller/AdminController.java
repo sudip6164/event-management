@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+import java.util.List;
 
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,6 +57,10 @@ public class AdminController {
         model.addAttribute("totalEvents", totalEvents);
         model.addAttribute("totalUsers", totalUsers);
         model.addAttribute("totalBookings", totalBookings);
+        
+		List<User> latestUsers = userRepository.findLatestUsers();
+	    model.addAttribute("latestUsers", latestUsers);
+	    
 	    return "admin/dashboard";
     }
 	
