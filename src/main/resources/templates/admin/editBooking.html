@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -79,49 +79,56 @@
                     <i class="uil uil-clock-three"></i>
                     <span class="text">Edit Booking Details</span>
                 </div>
-                <form class="event-form">
-                    <h2>Edit Booking</h2>
-                    <div class="form-group">
-                        <label for="bookingId">Booking ID</label>
-                        <input type="text" id="bookingId" name="bookingId" placeholder="Enter Booking ID" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="username">Username</label>
-                        <input type="text" id="username" name="username" placeholder="Enter Username" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="eventName">Event Name</label>
-                        <input type="text" id="eventName" name="eventName" placeholder="Enter Event Name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="ticketType">Ticket Type</label>
-                        <select id="ticketType" name="ticketType" required>
-                            <option value="VIP">VIP</option>
-                            <option value="Normal">Normal</option>
-                            <option value="Regular">Regular</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="paymentStatus">Payment Status</label>
-                        <select id="paymentStatus" name="paymentStatus" required>
-                            <option value="Paid">Paid</option>
-                            <option value="Pending">Pending</option>
-                            <option value="Failed">Failed</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="description">Description</label>
-                        <textarea id="description" name="description" rows="4" placeholder="Enter Booking Description"
-                            required></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="image">Ticket Image</label>
-                        <input type="file" id="image" name="image" accept="image/*" required>
-                    </div>
-                    <div class="form-group">
-                        <button type="submit">Update Booking</button>
-                    </div>
-                </form>
+                <form action="/admin/bookingEdit" method="POST" th:object="${booking}" class="event-form">
+				    <h2>Edit Booking</h2>
+				    <input type="hidden" th:field="*{id}">
+				    <div class="form-group">
+				        <label for="bookingId">Booking ID</label>
+				        <input type="text" id="bookingId" th:field="*{id}" name="bookingId" placeholder="Enter Booking ID" disabled required>
+				    </div>
+				
+				    <div class="form-group">
+				        <label for="userID">User ID</label>
+				        <input type="text" id="userID" th:field="*{user.id}" name="userID" placeholder="Enter User ID" disabled required>
+				    </div>
+				
+				    <div class="form-group">
+				        <label for="username">Username</label>
+				        <input type="text" id="username" th:field="*{user.username}" name="username" placeholder="Enter Username" disabled required>
+				    </div>
+				
+				    <div class="form-group">
+				        <label for="eventId">Event ID</label>
+				        <input type="text" id="eventId" th:field="*{events.id}" name="eventId" placeholder="Enter Event ID" disabled required>
+				    </div>
+				
+				    <div class="form-group">
+				        <label for="eventName">Event Name</label>
+				        <input type="text" id="eventName" th:field="*{events.eventName}" name="eventName" placeholder="Enter Event Name"  required>
+				    </div>
+				
+				    <div class="form-group">
+				        <label for="ticketType">Ticket Type</label>
+				        <select id="ticketType" th:field="*{ticketType}" name="ticketType" required>
+				            <option value="VIP">VIP</option>
+				            <option value="Normal">Normal</option>
+				            <option value="Regular">Regular</option>
+				        </select>
+				    </div>
+				
+				    <div class="form-group">
+				        <label for="paymentStatus">Payment Status</label>
+				        <select id="paymentStatus" th:field="*{paymentStatus}" name="paymentStatus" required>
+				            <option value="PAID">Paid</option>
+				            <option value="PENDING">Pending</option>
+				            <option value="FAILED">Failed</option>
+				        </select>
+				    </div>
+				
+				    <div class="form-group">
+				        <button type="submit">Update Booking</button>
+				    </div>
+				</form>
             </div>
         </div>
     </section>

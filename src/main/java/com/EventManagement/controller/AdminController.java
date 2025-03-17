@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.EventManagement.model.User;
+import com.EventManagement.model.Booking;
 import com.EventManagement.model.Events;
 import com.EventManagement.repository.UserRepository;
 import com.EventManagement.repository.BookingRepository;
@@ -283,5 +284,32 @@ public class AdminController {
 	    }
 		bookingRepository.deleteById(id);
 		return "redirect:/admin/bookingList";
+	}
+	
+	@GetMapping("/admin/bookingEditPage/{id}")
+	public String bookingEditPage(@PathVariable int id, Model model) {
+		Boolean isAdmin = (Boolean) session.getAttribute("adminUser");
+	    if (isAdmin == null || !isAdmin) {
+	        return "redirect:/admin/loginPage";
+	    }
+	    Booking booking = bookingRepository.getById(id);
+	    model.addAttribute("booking", booking);
+	    return "admin/editBooking";
+	}
+	
+	@PostMapping("/admin/bookingEdit")
+	public String userEdit(@ModelAttribute Booking booking, Model model) {
+		Boolean isAdmin = (Boolean) session.getAttribute("adminUser");
+	    if (isAdmin == null || !isAdmin) {
+	        return "redirect:/admin/loginPage";
+	    }
+	    
+	    Booking existingBooking= bookingRepository.findById(booking.getId()).orElse(null);
+	    
+	    existingBooking.setTicketType(booking.getTicketType());
+	    existingBooking.setPaymentStatus(booking.getPaymentStatus());
+	    
+	    bookingRepository.save(existingBooking);
+	    return "redirect:/admin/bookingList";
 	}
 }

@@ -57,7 +57,7 @@
                             <td data-label="Ticket Type" th:text="${b.ticketType}"></td>
                             <td data-label="Payment Status" th:text="${b.paymentStatus}"></td>
                             <td data-label="">
-                                <a href="editBooking.html">
+                                <a th:href="@{'/admin/bookingEditPage/'+${b.id}}">
                                     <button class="btn btn-primary">Edit</button>
                                 </a>
                             </td>
