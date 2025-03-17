@@ -63,11 +63,11 @@
                                     <button class="btn btn-primary">Edit</button>
                                 </a>
                             </td>
-                            <td data-label="">
-                            	<a th:href="@{'/admin/userDelete/'+${u.id}}">
-                                	<button class="btn btn-delete">Delete</button>
-                                </a>
-                            </td>
+							<td data-label="">
+							    <a href="#" onclick="confirmUserDeletion(event, this)" th:attr="data-url=@{'/admin/userDelete/'+${u.id}}">
+							        <button class="btn btn-delete">Delete</button>
+							    </a>
+							</td>
                         </tr>
                         <!-- Add more rows as needed -->
                     </tbody>
@@ -105,6 +105,17 @@
     });
 
     </script>
+    <script>
+    function confirmUserDeletion(event, element) {
+        event.preventDefault(); // Prevent default link action
+        const deleteUrl = element.getAttribute("data-url"); // Get the deletion URL
+
+        if (confirm("Are you sure you want to delete this user? This action cannot be undone.")) {
+            window.location.href = deleteUrl; // Redirect to deletion if confirmed
+        }
+    }
+</script>
+    
 </body>
 
 </html>

@@ -62,10 +62,10 @@
                                 </a>
                             </td>
                             <td data-label="">
-                                <a th:href="@{'/admin/bookingDelete/'+${b.id}}">
-                                	<button class="btn btn-delete">Delete</button>
-                                </a>
-                            </td>
+							    <a href="#" onclick="confirmBookingDeletion(event, this)" th:attr="data-url=@{'/admin/bookingDelete/'+${b.id}}">
+							        <button class="btn btn-delete">Delete</button>
+							    </a>
+							</td>
                         </tr>
                     </tbody>
                 </table>
@@ -102,6 +102,17 @@
     });
 
     </script>
+    <script>
+    function confirmBookingDeletion(event, element) {
+        event.preventDefault(); // Prevent default link action
+        const deleteUrl = element.getAttribute("data-url"); // Get the deletion URL
+
+        if (confirm("Are you sure you want to delete this booking? This action cannot be undone.")) {
+            window.location.href = deleteUrl; // Redirect to deletion if confirmed
+        }
+    }
+</script>
+    
 </body>
 
 </html>
