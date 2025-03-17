@@ -1,11 +1,13 @@
 package com.EventManagement.controller;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
@@ -37,6 +39,12 @@ import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
 
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.EncodeHintType;
+import com.google.zxing.WriterException;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
 @Controller
 public class HomeController {
 	
@@ -296,5 +304,24 @@ public class HomeController {
             }
         }
     }
+	
+	@GetMapping("/bookings/qrcode/{id}")
+	public ResponseEntity<byte[]> generateQRCode(@PathVariable int id) throws IOException, WriterException {
+	    Booking booking = bookingRepository.findById(id)
+	            .orElseThrow(() -> new RuntimeException("Booking not found"));
+
+	    String qrText = "Event: " + booking.getEvents().getEventName() + "\nTicket Type: " + booking.getTicketType();
+
+	    // Generate QR code using ZXing
+	    QRCodeWriter qrCodeWriter = new QRCodeWriter();
+	    BitMatrix bitMatrix = qrCodeWriter.encode(qrText, BarcodeFormat.QR_CODE, 250, 250);
+
+	    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+	    MatrixToImageWriter.writeToStream(bitMatrix, "PNG", stream);
+
+	    return ResponseEntity.ok()
+	            .contentType(MediaType.IMAGE_PNG)
+	            .body(stream.toByteArray());
+	}
 	
 }
