@@ -2,6 +2,7 @@ package com.EventManagement.controller;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -267,17 +268,17 @@ public class HomeController {
             document.add(new Paragraph("Event: " + booking.getEvents().getEventName()));
             document.add(new Paragraph("Booked by: " + booking.getUser().getUsername()));
             
-			/*
-			 * SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-			 * document.add(new Paragraph("Date: " +
-			 * dateFormat.format(booking.getEvents().getEventDate())));
-			 */
+			
+            DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            document.add(new Paragraph("Date: " + 
+                booking.getEvents().getEventDate().format(dateFormatter)));
+
+            // Format LocalTime
+            DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("hh:mm a");
+            document.add(new Paragraph("Time: " + 
+                booking.getEvents().getEventStartTime().format(timeFormatter) + " - " + 
+                booking.getEvents().getEventEndTime().format(timeFormatter)));
             
-//            SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm a");
-//            document.add(new Paragraph("Time: " + 
-//                timeFormat.format(booking.getEvents().getEventStartTime()) + " - " + 
-//                timeFormat.format(booking.getEvents().getEventEndTime())));
-//            
             document.add(new Paragraph("Venue: " + booking.getEvents().getVenue()));
             document.add(new Paragraph("Ticket Type: " + booking.getTicketType()));
             document.add(new Paragraph("Payment Status: " + booking.getPaymentStatus()));
