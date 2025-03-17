@@ -81,9 +81,10 @@
                 </div>
                 <form action="/admin/eventsEdit" method="POST" enctype="multipart/form-data" th:object="${events}" class="event-form">
                     <h2>Edit Event</h2>
+                    <input type="hidden" th:field="*{id}">
                     <div class="form-group">
                         <label for="eventId">Event ID</label>
-                        <input type="hidden" id="eventId" th:field="*{id}" name="eventId" placeholder="Enter Event ID" required>
+                        <input type="number" id="eventId" th:field="*{id}" name="eventId" placeholder="Enter Event ID" disabled required>
                     </div>
                     <div class="form-group">
                         <label for="eventName">Event Name</label>
