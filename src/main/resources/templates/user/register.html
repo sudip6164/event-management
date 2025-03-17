@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EventTalk Register Page</title>
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
-    <link rel="icon" href="img/favicon.png">
+    <link rel="icon" href="/img/favicon.png">
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
     <style>
@@ -31,7 +31,7 @@
 
                 <form action="register" method="POST" class="flex flex-col gap-4 w-full">
                     <input class="p-3 mt-8 rounded-xl border w-full" type="text" name="username" id="username" placeholder="Enter Username" required>
-                     <p th:text="${errorUserExists}" class="text-danger"></p>
+                     <p th:text="${errorUserExists}" class="text-danger" style="color:red;"></p>
                     <input class="p-3 mt-3 rounded-xl border w-full" type="email" name="email" id="email" placeholder="Enter Email" required>
                     <div class="relative">
                         <input class="p-3 mt-3 rounded-xl border w-full" type="password" name="password" id="password" placeholder="Enter Password" required>

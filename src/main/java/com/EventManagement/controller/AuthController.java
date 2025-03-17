@@ -199,6 +199,7 @@ public class AuthController {
         User user = userRepository.findByEmail(email);
         if (user == null) {
             model.addAttribute("invalidEmail", true);
+            model.addAttribute("emailError", "Invalid Email!");
             return "user/forgotPassword"; // Corrected to go back to forgotPassword page
         }
 

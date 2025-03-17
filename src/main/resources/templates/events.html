@@ -37,13 +37,7 @@
     <div class="row justify-content-center mt-5">
       <div class="col-md-8">
         <div class="input-group">
-          <input type="text" class="form-control" placeholder="Search events..." aria-label="Search events">
-          <select class="form-select">
-            <option selected>Filter by category</option>
-            <option value="conference">Conference</option>
-            <option value="workshop">Workshop</option>
-            <option value="meetup">Meetup</option>
-          </select>
+          <input type="text" class="form-control" id="searchInput" placeholder="Search events..." aria-label="Search events">
           <button class="btn btn-primary" type="button">Search</button>
         </div>
       </div>
@@ -59,7 +53,7 @@
           <img th:src="${e.eventsPictureName != null ? '/images/events/' + e.eventsPictureName : '/images/tech.jpg'}" class="card-img-top" alt="..." style="object-fit: cover; height: 200px;">
           <!-- Set image height -->
           <div class="card-body d-flex flex-column p-3">
-            <h5 class="card-title mb-2" th:text="${e.eventName}"></h5>
+            <h5 class="card-title mb-2" aria-label="Event Name" th:text="${e.eventName}"></h5>
             <p class="card-text mb-2" th:text="${e.description}"></p>
             <p class="mb-2"><strong>Date:</strong> <span th:text="${e.eventDate}"></span></p>
             <p class="mb-2"><strong>Location:</strong> <span th:text="${e.venue}"></span></p>
@@ -145,6 +139,29 @@
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
   <script src="js/google-map.js"></script>
   <script src="js/main.js"></script>
+  <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const searchInput = document.getElementById("searchInput");
+    const eventCards = document.querySelectorAll(".col-md-4"); // Select all event cards
+
+    searchInput.addEventListener("keyup", function () {
+      const searchTerm = searchInput.value.toLowerCase();
+
+      eventCards.forEach(card => {
+        const eventName = card.querySelector(".card-title").innerText.toLowerCase();
+        const eventDescription = card.querySelector(".card-text").innerText.toLowerCase();
+        const eventVenue = card.querySelector("span").innerText.toLowerCase();
+
+        if (eventName.includes(searchTerm) || eventDescription.includes(searchTerm) || eventVenue.includes(searchTerm)) {
+          card.style.display = "block";
+        } else {
+          card.style.display = "none";
+        }
+      });
+    });
+  });
+</script>
+
 </body>
 
 </html>
