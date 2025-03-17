@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -37,7 +37,9 @@
                     <thead>
                         <tr>
                             <th>ID</th>
+                            <th>User ID</th>
                             <th>Username</th>
+                            <th>Event ID</th>
                             <th>Event Name</th>
                             <th>Ticket Type</th>
                             <th>Payment Status</th>
@@ -46,12 +48,14 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td data-label="ID">1</td>
-                            <td data-label="Username">john_doe</td>
-                            <td data-label="Event Name">Tech Conference</td>
-                            <td data-label="Ticket Type">VIP</td>
-                            <td data-label="Payment Status">Paid</td>
+                        <tr th:each="b:${bookingList}">
+                            <td data-label="ID" th:text="${b.id}"></td>
+                            <td data-label="User ID" th:text="${b.user.id}"></td>
+                            <td data-label="Username" th:text="${b.user.username}"></td>
+                            <td data-label="Event ID" th:text="id"></td>
+                            <td data-label="Event Name" th:text="${b.events.eventName}"></td>
+                            <td data-label="Ticket Type" th:text="${b.ticketType}"></td>
+                            <td data-label="Payment Status" th:text="${b.paymentStatus}"></td>
                             <td data-label="">
                                 <a href="editBooking.html">
                                     <button class="btn btn-primary">Edit</button>
@@ -61,22 +65,6 @@
                                 <button class="btn btn-delete">Delete</button>
                             </td>
                         </tr>
-                        <tr>
-                            <td data-label="ID">2</td>
-                            <td data-label="Username">jane_smith</td>
-                            <td data-label="Event Name">Music Festival</td>
-                            <td data-label="Ticket Type">Normal</td>
-                            <td data-label="Payment Status">Pending</td>
-                            <td data-label="">
-                                <a href="editBooking.html">
-                                    <button class="btn btn-primary">Edit</button>
-                                </a>
-                            </td>
-                            <td data-label="">
-                                <button class="btn btn-delete">Delete</button>
-                            </td>
-                        </tr>
-                        <!-- Add more rows as needed -->
                     </tbody>
                 </table>
 

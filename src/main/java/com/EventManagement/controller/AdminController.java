@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.EventManagement.model.User;
 import com.EventManagement.model.Events;
 import com.EventManagement.repository.UserRepository;
+import com.EventManagement.repository.BookingRepository;
 import com.EventManagement.repository.EventsRepository;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -33,6 +34,9 @@ public class AdminController {
 	
 	@Autowired
     private EventsRepository eventsRepository;
+	
+	@Autowired
+    private BookingRepository bookingRepository;
 	
     @Autowired
     private HttpSession session;
@@ -258,5 +262,15 @@ public class AdminController {
 	    }
 		eventsRepository.deleteById(id);
 		return "redirect:/admin/eventsList";
+	}
+	
+	@GetMapping("/admin/bookingList")
+	public String BookingTable(@ModelAttribute User u, Model model) {
+		Boolean isAdmin = (Boolean) session.getAttribute("adminUser");
+	    if (isAdmin == null || !isAdmin) {
+	        return "redirect:/admin/loginPage";
+	    }
+		model.addAttribute("bookingList", bookingRepository.findAll());
+		return "admin/manageBooking";
 	}
 }

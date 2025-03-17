@@ -335,7 +335,7 @@ public class HomeController {
 	        booking.getEvents().getEventStartTime().format(timeFormatter),
 	        booking.getEvents().getEventEndTime().format(timeFormatter),
 	        booking.getEvents().getVenue(),
-	        booking.getTicketType(),
+	        booking.getTicketType(), 
 	        booking.getPaymentStatus()
 	    );
 
