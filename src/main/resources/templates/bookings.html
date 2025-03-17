@@ -60,10 +60,10 @@
                         </a>
                     </div>
                     <div class="d-flex mt-4">
-                    	<a th:href="@{'/bookings/cancel/'+${booking.id}}">
-                			<button class="btn btn-danger">Cancel Booking</button>
-                		</a>
-            		</div>
+					    <a href="#" onclick="confirmCancellation(event, this)" th:attr="data-url=@{'/bookings/cancel/'+${booking.id}}">
+					        <button class="btn btn-danger">Cancel Booking</button>
+					    </a>
+					</div>
                 </div>
             </div>
     
@@ -134,6 +134,17 @@
      });
 
   </script>
+  <script>
+    function confirmCancellation(event, element) {
+        event.preventDefault(); // Prevent default link action
+        const cancelUrl = element.getAttribute("data-url"); // Get the cancellation URL
+
+        if (confirm("Are you sure you want to cancel your booking? This action cannot be undone.")) {
+            window.location.href = cancelUrl; // Redirect to cancellation if confirmed
+        }
+    }
+</script>
+  
 </body>
 
 </html>
