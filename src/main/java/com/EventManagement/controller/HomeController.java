@@ -234,6 +234,7 @@ public class HomeController {
         model.addAttribute("user", user);
         return "redirect:/bookings";
     }
+	
 	@GetMapping("/bookings/download/{id}")
     public void downloadTicketPdf(@PathVariable int id, HttpServletResponse response, HttpSession session) {
         String username = (String) session.getAttribute("username");
@@ -310,7 +311,33 @@ public class HomeController {
 	    Booking booking = bookingRepository.findById(id)
 	            .orElseThrow(() -> new RuntimeException("Booking not found"));
 
-	    String qrText = "Event: " + booking.getEvents().getEventName() + "\nTicket Type: " + booking.getTicketType();
+	    DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+	    DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("hh:mm a");
+
+	    // Constructing detailed QR text
+	    String qrText = String.format(
+	        "Event Ticket\n" +
+	        "-------------------\n" +
+	        "Booking ID: %d\n" +
+	        "Event: %s\n" +
+	        "Booked by: %s\n" +
+	        "Date: %s\n" +
+	        "Time: %s - %s\n" +
+	        "Venue: %s\n" +
+	        "Ticket Type: %s\n" +
+	        "Payment Status: %s\n" +
+	        "-------------------\n" +
+	        "Thank you for booking with EventTalk!",
+	        booking.getId(),
+	        booking.getEvents().getEventName(),
+	        booking.getUser().getUsername(),
+	        booking.getEvents().getEventDate().format(dateFormatter),
+	        booking.getEvents().getEventStartTime().format(timeFormatter),
+	        booking.getEvents().getEventEndTime().format(timeFormatter),
+	        booking.getEvents().getVenue(),
+	        booking.getTicketType(),
+	        booking.getPaymentStatus()
+	    );
 
 	    // Generate QR code using ZXing
 	    QRCodeWriter qrCodeWriter = new QRCodeWriter();
@@ -323,5 +350,6 @@ public class HomeController {
 	            .contentType(MediaType.IMAGE_PNG)
 	            .body(stream.toByteArray());
 	}
+
 	
 }
