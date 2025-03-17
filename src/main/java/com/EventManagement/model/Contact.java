@@ -1,5 +1,6 @@
 package com.EventManagement.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,6 +15,8 @@ public class Contact {
     private String contactName;
     private String contactEmail;
     private String contactSubject;
+    
+    @Column(length = 5000)
     private String contactMessage;
 	public int getId() {
 		return id;

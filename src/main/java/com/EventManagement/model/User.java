@@ -2,6 +2,7 @@ package com.EventManagement.model;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,6 +20,8 @@ public class User {
 	
 	private String phone;
 	private String location;
+	
+	@Column(length = 5000)
 	private String bio;
 	
 	private String profilePictureName;

@@ -5,6 +5,7 @@ import java.time.LocalTime;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -22,6 +23,8 @@ public class Events {
     private LocalDate eventDate;
     private LocalTime eventStartTime;
     private LocalTime eventEndTime;
+    
+    @Column(length = 5000)
     private String description;
     
     private String eventsPictureName;
