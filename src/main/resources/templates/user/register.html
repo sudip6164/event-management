@@ -31,7 +31,7 @@
 
                 <form action="register" method="POST" class="flex flex-col gap-4 w-full">
                     <input class="p-3 mt-8 rounded-xl border w-full" type="text" name="username" id="username" placeholder="Enter Username" required>
-                     <p th:text="${errorUserExists}" class="text-danger" style="color:red;"></p>
+                     <p th:if="${errorUserExists}" th:text="${errorUserExists}" class="text-danger" style="color:red;"></p>
                     <input class="p-3 mt-3 rounded-xl border w-full" type="email" name="email" id="email" placeholder="Enter Email" required>
                     <div class="relative">
                         <input class="p-3 mt-3 rounded-xl border w-full" type="password" name="password" id="password" placeholder="Enter Password" required>

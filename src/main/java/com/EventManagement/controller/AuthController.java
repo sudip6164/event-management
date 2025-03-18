@@ -79,6 +79,7 @@ public class AuthController {
             return "index";
         }
         session.setAttribute("loggedIn", false);
+        model.addAttribute("error", "Invalid Username or Password!");
         return "user/login";
     }
     
