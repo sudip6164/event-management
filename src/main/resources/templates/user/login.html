@@ -29,6 +29,7 @@
                 <p class="text-center mt-2">Please log in to access your account</p>
                 <!--Login Form-->
                 <p th:if="${error}" th:text="${error}" class="text-danger" style="color:red;"></p>
+                <p th:if="${resetSuccess}" th:text="${resetSuccess}" class="text-success" style="color:green;"></p>
                 <form action="login" method="POST" class="flex flex-col gap-4 w-full">               
                     <input class="p-3 mt-8 rounded-xl border w-full" type="text" name="username" id="username"
                         placeholder="Enter Username" required>

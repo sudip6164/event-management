@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -10,6 +10,7 @@
     <style>
         .otp-input {
             width: 3rem;
+            
             height: 3rem;
             text-align: center;
             font-size: 1.5rem;
@@ -35,6 +36,7 @@
                 <h2 class="font-bold text-2xl text-center mt-8 text-[#6b76ff]">Enter OTP</h2>
                 <p class="text-center mt-2">Enter OTP sent to your email to reset password.</p>
                 <!-- OTP Form -->
+                <p th:if="${invalidOTPMessage}" th:text="${invalidOTPMessage}" class="text-danger" style="color:red;"></p>
                 <form action="/verifyOTP" method="POST" class="flex flex-col gap-4 w-full mt-6" onsubmit="combineOTP()">
                 	<input type="hidden" name="email" th:value="${email}">
                 	<input type="hidden" name="otp" id="otpInput">

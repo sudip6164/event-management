@@ -263,6 +263,7 @@ public class AuthController {
             if (currentTimestamp - otpTimestamp > 300000) {
                 // OTP is expired
                 model.addAttribute("expiredOTP", true);
+                model.addAttribute("invalidOTPMessage", "Expired OTP code!");
                 return "user/otp"; // Redirect back to OTP page
             }
 
@@ -273,11 +274,14 @@ public class AuthController {
             } else {
                 // OTP is invalid
                 model.addAttribute("invalidOTP", true);
+                model.addAttribute("invalidOTPMessage", "Invalid OTP code!");
+                model.addAttribute("otp", otp);
                 return "user/otp"; // Return to OTP page with error
             }
         } else {
             // No OTP found for the email
             model.addAttribute("invalidOTP", true);
+            model.addAttribute("invalidOTPMessage", "Invalid OTP code!");
             return "user/otp"; // Return to OTP page with error
         }
     }
@@ -300,7 +304,8 @@ public class AuthController {
         otpMap.remove(email);
 
         model.addAttribute("passwordResetSuccess", true);
-        return "user/login"; // Redirect to login page after successful password reset
+        model.addAttribute("resetSuccess", "Password reset successfully.");
+        return "redirect:/loginPage"; // Redirect to login page after successful password reset
     }
 
 }
