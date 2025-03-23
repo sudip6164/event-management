@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EventTalk Dashboard</title>
+    <!----======== CSS ======== -->
+    <link rel="stylesheet" href="/adminCss/dashboard.css">
+    <link rel="stylesheet" href="/adminCss/table.css">
+
+    <!----===== Iconscout CSS ===== -->
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+</head>
+
+<body>
+    
+    <div th:replace="~{fragments/admin/navbar :: navbar}"></div>
+    
+    <section class="dashboard">
+        <div class="top">
+            <i class="uil uil-bars sidebar-toggle"></i>
+            <div class="search-box">
+                <i class="uil uil-search"></i>
+                <input type="text" id="searchInput" placeholder="Search here...">
+            </div>
+
+            <!--<img src="images/profile.jpg" alt="">-->
+        </div>
+        <div class="dash-content">
+            <div class="activity">
+                <div class="title">
+                    <i class="uil uil-clock-three"></i>
+                    <span class="text">Review Management</span>
+                </div>
+                <table class="sc-responsive-table">
+                    <thead>
+                        <tr>
+                            <th>Event ID</th>
+                            <th>Event Name</th>
+                            <th> ID </th>
+                            <th>Name </th>
+                            <th> Email </th>
+                            <th>Review </th>
+                            <th>Rating</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="r:${reviewList}">
+                            <td data-label="Event ID" th:text="${r.events.id}"></td>
+                            <td data-label="Event Name" th:text="${r.events.eventName}"></td>
+                            <td data-label="ID" th:text="${r.id}"></td>
+                            <td data-label="Review Name" th:text="${r.reviewerName}"></td>
+                            <td data-label="Review Email" th:text="${r.reviewerEmail}"></td>
+                            <td data-label="Review Text" th:text="${r.reviewText}"></td>
+                            <td data-label="Rating" th:text="${r.rating}"></td>
+<!--                             <td data-label="">
+							    <a href="#" onclick="confirmReviewDeletion(event, this)" th:attr="data-url=@{'/admin/reviewDelete/'+${r.id}}">
+							        <button class="btn btn-delete">Delete</button>
+							    </a>
+							</td> -->
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- Pagination -->
+                <div class="pagination">
+                    <button class="btn btn-primary">Previous</button>
+                    <button class="btn btn-primary">1</button>
+                    <button class="btn btn-primary">2</button>
+                    <button class="btn btn-primary">3</button>
+                    <button class="btn btn-primary">Next</button>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script src="/js/admin.js"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const searchInput = document.getElementById("searchInput");
+        const tableRows = document.querySelectorAll("tbody tr");
+
+        searchInput.addEventListener("keyup", function () {
+            const searchTerm = searchInput.value.toLowerCase();
+
+            tableRows.forEach(row => {
+                const eventName = row.querySelector("td[data-label='Review Name']").innerText.toLowerCase();
+                if (eventName.includes(searchTerm)) {
+                    row.style.display = "";
+                } else {
+                    row.style.display = "none";
+                }
+            });
+        });
+    });
+
+    </script>
+    <script>
+    function confirmBookingDeletion(event, element) {
+        event.preventDefault(); // Prevent default link action
+        const deleteUrl = element.getAttribute("data-url"); // Get the deletion URL
+
+        if (confirm("Are you sure you want to delete this review? This action cannot be undone.")) {
+            window.location.href = deleteUrl; // Redirect to deletion if confirmed
+        }
+    }
+</script>
+    
+</body>
+
+</html>

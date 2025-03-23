@@ -24,6 +24,7 @@ import com.EventManagement.model.Events;
 import com.EventManagement.repository.UserRepository;
 import com.EventManagement.repository.BookingRepository;
 import com.EventManagement.repository.EventsRepository;
+import com.EventManagement.repository.ReviewRepository;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -39,6 +40,9 @@ public class AdminController {
 	
 	@Autowired
     private BookingRepository bookingRepository;
+	
+	@Autowired
+    private ReviewRepository reviewRepository;
 	
     @Autowired
     private HttpSession session;
@@ -324,5 +328,15 @@ public class AdminController {
 	    
 	    bookingRepository.save(existingBooking);
 	    return "redirect:/admin/bookingList";
+	}
+	
+	@GetMapping("/admin/reviewList")
+	public String reviewTable(@ModelAttribute User u, Model model) {
+		Boolean isAdmin = (Boolean) session.getAttribute("adminUser");
+	    if (isAdmin == null || !isAdmin) {
+	        return "redirect:/admin/loginPage";
+	    }
+		model.addAttribute("reviewList", reviewRepository.findAll());
+		return "admin/manageReview";
 	}
 }
