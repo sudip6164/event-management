@@ -55,11 +55,11 @@
                             <td data-label="Review Email" th:text="${r.reviewerEmail}"></td>
                             <td data-label="Review Text" th:text="${r.reviewText}"></td>
                             <td data-label="Rating" th:text="${r.rating}"></td>
-<!--                             <td data-label="">
+                            <td data-label="">
 							    <a href="#" onclick="confirmReviewDeletion(event, this)" th:attr="data-url=@{'/admin/reviewDelete/'+${r.id}}">
 							        <button class="btn btn-delete">Delete</button>
 							    </a>
-							</td> -->
+							</td>
                         </tr>
                     </tbody>
                 </table>
@@ -97,7 +97,7 @@
 
     </script>
     <script>
-    function confirmBookingDeletion(event, element) {
+    function confirmReviewDeletion(event, element) {
         event.preventDefault(); // Prevent default link action
         const deleteUrl = element.getAttribute("data-url"); // Get the deletion URL
 

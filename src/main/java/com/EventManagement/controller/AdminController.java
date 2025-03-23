@@ -293,7 +293,7 @@ public class AdminController {
 	}
 	
 	@GetMapping("admin/bookingDelete/{id}")
-	public String bokingdelete(@PathVariable int id, Model model)
+	public String bookingdelete(@PathVariable int id, Model model)
 	{
 		Boolean isAdmin = (Boolean) session.getAttribute("adminUser");
 	    if (isAdmin == null || !isAdmin) {
@@ -338,5 +338,16 @@ public class AdminController {
 	    }
 		model.addAttribute("reviewList", reviewRepository.findAll());
 		return "admin/manageReview";
+	}
+	
+	@GetMapping("admin/reviewDelete/{id}")
+	public String reviewdelete(@PathVariable int id, Model model)
+	{
+		Boolean isAdmin = (Boolean) session.getAttribute("adminUser");
+	    if (isAdmin == null || !isAdmin) {
+	        return "redirect:/admin/loginPage";
+	    }
+		reviewRepository.deleteById(id);
+		return "redirect:/admin/reviewList";
 	}
 }
