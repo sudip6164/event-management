@@ -18,6 +18,10 @@ public class Events {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+	private double standardPrice;
+    private double vipPrice;
+    private double premiumPrice;
+	
     private String eventName;
     private String venue;
     private LocalDate eventDate;
@@ -84,6 +88,24 @@ public class Events {
 	}
 	public void setEventsPicture(MultipartFile eventsPicture) {
 		this.eventsPicture = eventsPicture;
+	}
+	public double getStandardPrice() {
+		return standardPrice;
+	}
+	public void setStandardPrice(double standardPrice) {
+		this.standardPrice = standardPrice;
+	}
+	public double getVipPrice() {
+		return vipPrice;
+	}
+	public void setVipPrice(double vipPrice) {
+		this.vipPrice = vipPrice;
+	}
+	public double getPremiumPrice() {
+		return premiumPrice;
+	}
+	public void setPremiumPrice(double premiumPrice) {
+		this.premiumPrice = premiumPrice;
 	}
 	
 }

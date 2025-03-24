@@ -48,7 +48,10 @@
                             <th>Event Start Time</th>
                             <th>Event End Time</th>
                             <th>Description</th>
-                            <th>Image</th>
+                            <th>Image</th>                           
+                            <th>Stand ard Price</th>                           
+                            <th>VIP Price</th>                           
+                            <th>Pre mium Price</th>                           
                             <th></th>
                             <th></th>
                         </tr>
@@ -64,6 +67,9 @@
                             <td th:text="${e.description}" data-label="Description"></td>
                             <td data-label="Image"><img th:src="${e.eventsPictureName != null ? '/images/events/' + e.eventsPictureName : '/images/tech.jpg'}" alt="Tech Conference" class="img-fluid"
                                     style="width: 100px; height: auto;"></td>
+                            <td th:text="${e.standardPrice}"></td>
+                            <td th:text="${e.vipPrice}"></td>
+                            <td th:text="${e.premiumPrice}"></td>
                             <td data-label="">
                                 <a th:href="@{'/admin/eventsEditPage/'+${e.id}}">
                                     <button class="btn btn-primary">Edit</button>
