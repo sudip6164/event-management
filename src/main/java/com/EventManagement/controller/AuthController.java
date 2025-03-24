@@ -162,6 +162,8 @@ public class AuthController {
         if (username == null) {
             return "redirect:/loginPage";
         }
+        User user = userRepository.findByUsername(username);
+        model.addAttribute("user", user);
         return "user/profile/changePassword";
     }
 
