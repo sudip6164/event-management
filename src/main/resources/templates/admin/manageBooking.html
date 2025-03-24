@@ -41,6 +41,7 @@
                             <th>Username</th>
                             <th>Event ID</th>
                             <th>Event Name</th>
+                            <th>Price</th>
                             <th>Ticket Type</th>
                             <th>Payment Status</th>
                             <th></th>
@@ -52,8 +53,9 @@
                             <td data-label="ID" th:text="${b.id}"></td>
                             <td data-label="User ID" th:text="${b.user.id}"></td>
                             <td data-label="Username" th:text="${b.user.username}"></td>
-                            <td data-label="Event ID" th:text="id"></td>
+                            <td data-label="Event ID" th:text="${b.events.id}"></td>
                             <td data-label="Event Name" th:text="${b.events.eventName}"></td>
+                            <td data-label="Price" th:text="${b.price}"></td>
                             <td data-label="Ticket Type" th:text="${b.ticketType}"></td>
                             <td data-label="Payment Status" th:text="${b.paymentStatus}"></td>
                             <td data-label="">

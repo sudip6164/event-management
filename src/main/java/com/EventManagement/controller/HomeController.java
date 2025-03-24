@@ -183,7 +183,7 @@ public class HomeController {
     }
 	
 	@PostMapping("/bookings/book")
-	public String bookTicket(@RequestParam int eventId, @RequestParam String ticketType, HttpSession session, Model model) {
+	public String bookTicket(@RequestParam int eventId, @RequestParam String ticketType, @RequestParam double price, HttpSession session, Model model) {
 
 			String username = (String) session.getAttribute("username");
 			
@@ -199,6 +199,7 @@ public class HomeController {
 			Booking booking = new Booking();
 			booking.setUser(user);
 			booking.setEvents(events);
+			booking.setPrice(price);
 			booking.setTicketType(ticketType);
 			booking.setPaymentStatus(PaymentStatus.PENDING);
 			
@@ -289,6 +290,7 @@ public class HomeController {
                 booking.getEvents().getEventEndTime().format(timeFormatter)));
             
             document.add(new Paragraph("Venue: " + booking.getEvents().getVenue()));
+            document.add(new Paragraph("Price: " + booking.getPrice()));
             document.add(new Paragraph("Ticket Type: " + booking.getTicketType()));
             document.add(new Paragraph("Payment Status: " + booking.getPaymentStatus()));
             document.add(new Paragraph("-------------------"));
@@ -324,6 +326,7 @@ public class HomeController {
 	        "Date: %s\n" +
 	        "Time: %s - %s\n" +
 	        "Venue: %s\n" +
+	        "Price: %s\n" +
 	        "Ticket Type: %s\n" +
 	        "Payment Status: %s\n" +
 	        "-------------------\n" +
@@ -335,6 +338,7 @@ public class HomeController {
 	        booking.getEvents().getEventStartTime().format(timeFormatter),
 	        booking.getEvents().getEventEndTime().format(timeFormatter),
 	        booking.getEvents().getVenue(),
+	        booking.getPrice(),
 	        booking.getTicketType(), 
 	        booking.getPaymentStatus()
 	    );

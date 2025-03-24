@@ -329,7 +329,6 @@ public class AdminController {
 	    
 	    Booking existingBooking= bookingRepository.findById(booking.getId()).orElse(null);
 	    
-	    existingBooking.setTicketType(booking.getTicketType());
 	    existingBooking.setPaymentStatus(booking.getPaymentStatus());
 	    
 	    bookingRepository.save(existingBooking);

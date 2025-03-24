@@ -50,6 +50,7 @@
             <div class="d-flex align-items-center">
               <form action="/bookings/book" method="POST">
 			    <input type="hidden" name="eventId" th:value="${events.id}">
+			    <input type="hidden" name="price" id="selected-price" value="0.0">
 			    <select name="ticketType" class="form-control form-control-xs mr-2" required onchange="updatePrice(this)">
 			        <option value="" disabled selected>Select Ticket Type</option>
 			        <option value="Standard" th:data-price="${events.standardPrice}">Standard</option>
@@ -161,10 +162,12 @@
     
     function updatePrice(selectElement) {
         const priceElement = document.getElementById("ticket-price");
+        const priceInput = document.getElementById("selected-price");
         const selectedOption = selectElement.options[selectElement.selectedIndex];
         const price = selectedOption.getAttribute("data-price");
 
-        priceElement.innerText = price ? "Rs. " + price : "Please select ticket type";
+        priceElement.innerText = price ? "Rs. " + parseFloat(price).toFixed(2) : "Please select ticket type";
+        priceInput.value = price ? price : "0.0";
     }
 
   </script>

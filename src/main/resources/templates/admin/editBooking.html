@@ -104,12 +104,17 @@
 				
 				    <div class="form-group">
 				        <label for="eventName">Event Name</label>
-				        <input type="text" id="eventName" th:field="*{events.eventName}" name="eventName" placeholder="Enter Event Name"  required>
+				        <input type="text" id="eventName" th:field="*{events.eventName}" name="eventName" placeholder="Enter Event Name" disabled  required>
+				    </div>
+				    
+				    <div class="form-group">
+				        <label for="price">Price</label>
+				        <input type="text" id="price" th:field="*{price}" name="price" placeholder="Enter Price" disabled  required>
 				    </div>
 				
 				    <div class="form-group">
 				        <label for="ticketType">Ticket Type</label>
-				        <select id="ticketType" th:field="*{ticketType}" name="ticketType" required>
+				        <select id="ticketType" th:field="*{ticketType}" name="ticketType" disabled required>
 				            <option value="VIP">VIP</option>
 				            <option value="Normal">Normal</option>
 				            <option value="Regular">Regular</option>
