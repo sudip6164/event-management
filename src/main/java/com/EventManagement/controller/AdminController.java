@@ -9,6 +9,8 @@ import java.util.List;
 
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +28,8 @@ import com.EventManagement.repository.BookingRepository;
 import com.EventManagement.repository.EventsRepository;
 import com.EventManagement.repository.ReviewRepository;
 
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -46,6 +50,9 @@ public class AdminController {
 	
     @Autowired
     private HttpSession session;
+    
+    @Autowired
+    private JavaMailSender emailSender;
     
 	@GetMapping("/admin")
     public String adminDashboard(Model model) {
@@ -366,6 +373,9 @@ public class AdminController {
         if (booking != null) {
             booking.setBookingStatus(Booking.BookingStatus.APPROVED);
             bookingRepository.save(booking);
+            sendBookingStatusEmail(booking, "APPROVED"); // Send email
+        } else {
+            System.out.println("Booking not found for ID: " + id);
         }
         return "redirect:/admin/bookingList";
     }
@@ -380,7 +390,54 @@ public class AdminController {
         if (booking != null) {
             booking.setBookingStatus(Booking.BookingStatus.DENIED);
             bookingRepository.save(booking);
+            sendBookingStatusEmail(booking, "DENIED"); // Send email
+        } else {
+            System.out.println("Booking not found for ID: " + id);
         }
         return "redirect:/admin/bookingList";
+    }
+
+    // Helper method to send email
+    private void sendBookingStatusEmail(Booking booking, String status) {
+        try {
+            MimeMessage message = emailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+
+            helper.setFrom("infoyarsatoursandtravels@gmail.com"); // Sender email
+            helper.setTo(booking.getUser().getEmail()); // User's email
+            helper.setSubject("Booking Status Update - EventTalk");
+
+            String emailContent = String.format(
+                "Dear %s,\n\n" +
+                "We are writing to inform you about the status of your booking with EventTalk.\n\n" +
+                "Booking Details:\n" +
+                "-------------------\n" +
+                "Booking ID: %d\n" +
+                "Event Name: %s\n" +
+                "Ticket Type: %s\n" +
+                "Price: %.2f\n" +
+                "Payment Status: %s\n" +
+                "Booking Status: %s\n" +
+                "-------------------\n\n" +
+                "If you have any questions, feel free to contact us.\n\n" +
+                "Thank you for choosing EventTalk!\n" +
+                "Best regards,\n" +
+                "The EventTalk Team",
+                booking.getUser().getUsername(),
+                booking.getId(),
+                booking.getEvents().getEventName(),
+                booking.getTicketType(),
+                booking.getPrice(),
+                booking.getPaymentStatus(),
+                status
+            );
+
+            helper.setText(emailContent);
+            emailSender.send(message);
+            System.out.println("Email sent successfully to " + booking.getUser().getEmail() + " for booking ID: " + booking.getId());
+        } catch (MessagingException e) {
+            System.out.println("Failed to send email for booking ID: " + booking.getId() + " - " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 }
