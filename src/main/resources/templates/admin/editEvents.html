@@ -115,6 +115,18 @@
                         <label for="image">Event Image</label>
                         <input type="file" id="eventsPicture" name="eventsPicture" th:field="*{eventsPicture}" accept="image/*">
                     </div>
+                                        <div class="form-group">
+                        <label for="standardPrice">Standard Price</label>
+                        <input type="number" id="standardPrice" name="standardPrice" th:field="*{standardPrice}" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="vipPrice">VIP Price</label>
+                        <input type="number" id="vipPrice" name="vipPrice" th:field="*{vipPrice}" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="premiumPrice">Premium Price</label>
+                        <input type="number" id="premiumPrice" name="premiumPrice" th:field="*{premiumPrice}" step="0.01" required>
+                    </div>
                     <div class="form-group">
                         <button type="submit">Update Event</button>
                     </div>

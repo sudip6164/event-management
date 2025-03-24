@@ -228,7 +228,9 @@ public class AdminController {
 	}
 	
 	@PostMapping("/admin/eventsEdit")
-	public String eventsEdit(@ModelAttribute Events events, @RequestParam("eventsPicture") MultipartFile eventsPicture, Model model) {
+	public String eventsEdit(@ModelAttribute Events events, @RequestParam("eventsPicture") MultipartFile eventsPicture,@RequestParam("standardPrice") double standardPrice,
+            @RequestParam("vipPrice") double vipPrice,
+            @RequestParam("premiumPrice") double premiumPrice, Model model) {
 		Boolean isAdmin = (Boolean) session.getAttribute("adminUser");
 	    if (isAdmin == null || !isAdmin) {
 	        return "redirect:/admin/loginPage";
@@ -247,6 +249,10 @@ public class AdminController {
 	    if (events.getEventEndTime() != null) {
 	        existingEvents.setEventEndTime(events.getEventEndTime());
 	    }
+	    
+	    existingEvents.setStandardPrice(standardPrice);
+	    existingEvents.setVipPrice(vipPrice);
+	    existingEvents.setPremiumPrice(premiumPrice);
 	    
 	    if (!eventsPicture.isEmpty()) {
 
