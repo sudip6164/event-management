@@ -355,4 +355,32 @@ public class AdminController {
 		reviewRepository.deleteById(id);
 		return "redirect:/admin/reviewList";
 	}
+	
+	@GetMapping("/admin/bookingApprove/{id}")
+    public String approveBooking(@PathVariable int id, Model model) {
+        Boolean isAdmin = (Boolean) session.getAttribute("adminUser");
+        if (isAdmin == null || !isAdmin) {
+            return "redirect:/admin/loginPage";
+        }
+        Booking booking = bookingRepository.findById(id).orElse(null);
+        if (booking != null) {
+            booking.setBookingStatus(Booking.BookingStatus.APPROVED);
+            bookingRepository.save(booking);
+        }
+        return "redirect:/admin/bookingList";
+    }
+
+    @GetMapping("/admin/bookingDeny/{id}")
+    public String denyBooking(@PathVariable int id, Model model) {
+        Boolean isAdmin = (Boolean) session.getAttribute("adminUser");
+        if (isAdmin == null || !isAdmin) {
+            return "redirect:/admin/loginPage";
+        }
+        Booking booking = bookingRepository.findById(id).orElse(null);
+        if (booking != null) {
+            booking.setBookingStatus(Booking.BookingStatus.DENIED);
+            bookingRepository.save(booking);
+        }
+        return "redirect:/admin/bookingList";
+    }
 }

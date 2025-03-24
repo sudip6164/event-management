@@ -38,12 +38,15 @@
                         <tr>
                             <th>ID</th>
                             <th>User ID</th>
-                            <th>Username</th>
+                            <th>User name</th>
                             <th>Event ID</th>
                             <th>Event Name</th>
                             <th>Price</th>
                             <th>Ticket Type</th>
                             <th>Payment Status</th>
+                            <th>Booking Status</th>
+                            <th></th>
+                            <th></th>
                             <th></th>
                             <th></th>
                         </tr>
@@ -58,6 +61,21 @@
                             <td data-label="Price" th:text="${b.price}"></td>
                             <td data-label="Ticket Type" th:text="${b.ticketType}"></td>
                             <td data-label="Payment Status" th:text="${b.paymentStatus}"></td>
+                            <td data-label="Booking Status">
+                                <span th:text="${b.bookingStatus}"></span>
+                                <div class="action-buttons">
+                                    <a href="#" onclick="confirmAction(event, this, 'approve')" 
+                                       th:attr="data-url=@{'/admin/bookingApprove/'+${b.id}}"
+                                       th:if="${b.bookingStatus.toString() != 'APPROVED'}">
+                                        <button class="btn btn-success" style="background-color:#66AA66; color:white; margin-top:10px;">Approve</button>
+                                    </a>
+                                    <a href="#" onclick="confirmAction(event, this, 'deny')" 
+                                       th:attr="data-url=@{'/admin/bookingDeny/'+${b.id}}"
+                                       th:if="${b.bookingStatus.toString() != 'DENIED'}">
+                                        <button class="btn btn-danger" style="background-color:#dc3545; color:white; margin-top:10px;">Deny</button>
+                                    </a>
+                                </div>
+                            </td>
                             <td data-label="">
                                 <a th:href="@{'/admin/bookingEditPage/'+${b.id}}">
                                     <button class="btn btn-primary">Edit</button>
@@ -103,14 +121,23 @@
         });
     });
 
-    </script>
-    <script>
     function confirmBookingDeletion(event, element) {
         event.preventDefault(); // Prevent default link action
         const deleteUrl = element.getAttribute("data-url"); // Get the deletion URL
 
         if (confirm("Are you sure you want to delete this booking? This action cannot be undone.")) {
             window.location.href = deleteUrl; // Redirect to deletion if confirmed
+        }
+    }
+    
+    function confirmAction(event, element, action) {
+        event.preventDefault();
+        const url = element.getAttribute("data-url");
+        const message = action === 'approve' 
+            ? "Are you sure you want to approve this booking?"
+            : "Are you sure you want to deny this booking?";
+        if (confirm(message)) {
+            window.location.href = url;
         }
     }
 </script>

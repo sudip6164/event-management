@@ -29,6 +29,13 @@ public class Booking {
     private PaymentStatus paymentStatus = PaymentStatus.PENDING;
     
     private double price;
+    
+    @Enumerated(EnumType.STRING)
+    private BookingStatus bookingStatus = BookingStatus.PENDING;
+    
+    public enum BookingStatus {
+        PENDING, APPROVED, DENIED
+    }
 
 	public int getId() {
 		return id;
@@ -76,6 +83,14 @@ public class Booking {
 
 	public void setPrice(double price) {
 		this.price = price;
+	}
+
+	public BookingStatus getBookingStatus() {
+		return bookingStatus;
+	}
+
+	public void setBookingStatus(BookingStatus bookingStatus) {
+		this.bookingStatus = bookingStatus;
 	}
 	
     
